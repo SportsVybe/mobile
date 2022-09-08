@@ -1,7 +1,7 @@
 import React from 'react';
 import { LogBox } from 'react-native';
 
-import MainNavigation from './Navigation/MainNavigation';
+import MainNavigation from './Navigation/AppNavigation';
 
 LogBox.ignoreAllLogs();
 

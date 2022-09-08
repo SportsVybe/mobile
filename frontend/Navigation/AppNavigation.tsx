@@ -5,12 +5,11 @@ import { useMoralis } from 'react-moralis';
 import { useWalletConnect } from '../WalletConnect';
 
 import CryptoAuth from '../Components/CryptoAuth';
-import Header from '../Components/Header';
 import HomeNavigation from './HomeNavigation';
 
 const Stack = createStackNavigator();
 
-function MainNavigation(): JSX.Element {
+function AppNavigation(): JSX.Element {
   const connector = useWalletConnect();
   const {
     authenticate,
@@ -46,4 +45,4 @@ function MainNavigation(): JSX.Element {
   );
 }
 
-export default MainNavigation;
+export default AppNavigation;
