@@ -18,11 +18,8 @@ import {
   Provider,
 } from 'react-native-paper';
 
-import LottieView from 'lottie-react-native';
 import { useMoralis } from 'react-moralis';
 import { useWalletConnect } from '../WalletConnect';
-
-import Animation from '../splashLottie.json';
 
 // import Loader from './Components/Loader';
 const windowWidth = Dimensions.get('window').width;
@@ -81,25 +78,22 @@ const LoginScreen = ({ navigation }) => {
             alignContent: 'center',
           }}>
           <Image
-            style={{ flex: 1, maxWidth: '100%', alignSelf: 'center' }}
-            source={require('../eth.png')}
+            style={{
+              flex: 1,
+              maxWidth: '100%',
+              alignSelf: 'center',
+              resizeMode: 'contain',
+            }}
+            source={require('../assets/images/logos/sportsvybe_header_logo.png')}
           />
           <View style={{ flex: 1 }}>
             <KeyboardAvoidingView enabled>
-              <View style={{ alignItems: 'center' }}>
-                <LottieView source={Animation} loop autoPlay />
-                <Image
-                  source={require('../moralis-logo.png')}
-                  style={{
-                    width: '50%',
-                    height: 100,
-                    resizeMode: 'contain',
-                    margin: 30,
-                  }}
-                />
-              </View>
-
-              <View>
+              <View
+                style={{
+                  flex: 1,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
                 {authError && (
                   <Portal>
                     <Dialog visible={visible} onDismiss={hideDialog}>
@@ -126,13 +120,6 @@ const LoginScreen = ({ navigation }) => {
                 onPress={handleCryptoLogin}>
                 <Text style={styles.buttonTextStyle}>Wallet Login</Text>
               </TouchableOpacity>
-              {/* <Text
-                style={styles.registerTextStyle}
-                onPress={() =>
-                  Linking.openURL("https://ethereum.org/en/wallets/")
-                }>
-                What are wallets?
-              </Text> */}
             </KeyboardAvoidingView>
           </View>
         </ScrollView>
@@ -149,16 +136,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     alignContent: 'center',
   },
-  SectionStyle: {
-    flexDirection: 'row',
-    height: 40,
-    marginTop: 20,
-    marginLeft: 35,
-    marginRight: 35,
-    margin: 10,
-  },
   buttonStyle: {
-    backgroundColor: '#7DE24E',
+    backgroundColor: '#999',
     borderWidth: 0,
     color: '#FFFFFF',
     borderColor: '#7DE24E',
