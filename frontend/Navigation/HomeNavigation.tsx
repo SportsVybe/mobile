@@ -1,26 +1,18 @@
 import React from 'react';
 
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
-import NFTAssets from '../Components/NFT/NFTAssets';
 import Profile from '../Components/Profile/Profile';
-import RecentTransactions from '../Components/RecentTransactions/RecentTransactions';
-import Transfer from '../Components/Transfer/Transfer';
-import Venues from '../Components/Venues/Venues';
 
 import {
-  faCreditCard,
   faMapMarkerAlt,
-  faMoneyBill,
-  faMoneyCheck,
-  faPaperPlane,
-  faRocket,
   faStar,
   faUser,
   faUsers,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import VenuesNavigation from './VenuesNavigation';
+import RewardsNavigation from './RewardsNavigation';
 import TeamsNavigation from './TeamsNavigation';
+import VenuesNavigation from './VenuesNavigation';
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -62,9 +54,9 @@ function HomeNavigation(): JSX.Element {
             return <FontAwesomeIcon icon={faStar} color={color} size={20} />;
           },
         }}
-        component={NFTAssets}
+        component={RewardsNavigation}
       />
-      
+
       <Tab.Screen
         name="Profile"
         options={{
