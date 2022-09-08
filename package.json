@@ -1,6 +1,6 @@
 {
-  "name": "EthereumRNBoilerplate",
-  "version": "1.0.0",
+  "name": "SportsVybe",
+  "version": "0.0.1",
   "private": true,
   "keywords": [
     "react",
@@ -9,7 +9,11 @@
     "dapp",
     "ethereum",
     "web3",
-    "starter"
+    "sports",
+    "play sports to earn",
+    "play sports to earn money",
+    "play sports to earn tokens",
+    "mobile"
   ],
   "scripts": {
     "android": "react-native run-android",
