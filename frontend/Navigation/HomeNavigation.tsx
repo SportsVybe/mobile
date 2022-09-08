@@ -13,6 +13,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import RewardsNavigation from './RewardsNavigation';
 import TeamsNavigation from './TeamsNavigation';
 import VenuesNavigation from './VenuesNavigation';
+import ProfileNavigation from './ProfileNavigation';
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -65,7 +66,7 @@ function HomeNavigation(): JSX.Element {
             <FontAwesomeIcon icon={faUser} color={color} size={20} />
           ),
         }}
-        component={Profile}
+        component={ProfileNavigation}
       />
     </Tab.Navigator>
   );
