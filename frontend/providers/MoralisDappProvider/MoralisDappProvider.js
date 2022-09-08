@@ -1,21 +1,42 @@
-import React, {useEffect, useMemo, useState} from 'react';
-import {useMoralis} from 'react-moralis';
+import React, { useEffect, useMemo, useState } from 'react';
+import { useMoralis } from 'react-moralis';
 import MoralisDappContext from './context';
 
 function MoralisDappProvider({children}) {
-  const {web3, Moralis, user} = useMoralis();
+  const {web3, Moralis, user, isAuthenticated} = useMoralis();
   const [walletAddress, setWalletAddress] = useState();
   const [chainId, setChainId] = useState();
-  useEffect(() => {
-    Moralis.onChainChanged(function (chain) {
-      setChainId(chain);
-    });
+  // useEffect(() => {
+  //   Moralis.onChainChanged(function (chain) {
+  //     setChainId(chain);
+  //   });
 
-    Moralis.onAccountChanged(function (address) {
-      setWalletAddress(address[0]);
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  //   Moralis.onAccountChanged(function (address) {
+  //     setWalletAddress(address[0]);
+  //   });
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
+
+  const checkIfWalletIsConnected = async () => {
+    try {
+      if (isAuthenticated) {
+        const account =
+          web3.givenProvider?.selectedAddress || user?.get('ethAddress');
+        //set the current account
+        setWallet(account);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+    useEffect(() => {
+      // if the user isAuthenticated then check if wallet is connected
+      if (isAuthenticated) {
+        checkIfWalletIsConnected();
+      }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isAuthenticated]);
 
   useEffect(() => setChainId(web3.givenProvider?.chainId));
   useMemo(
@@ -28,18 +49,18 @@ function MoralisDappProvider({children}) {
 
   return (
     // USE THIS TO SKIP LOGIN THROUGH WALLET (FOR DEVELOPMENT PURPOSES)
-    // <MoralisDappContext.Provider
-    //   value={{
-    //     walletAddress: '0x29684Ca7D10F82b9dC7E5a447e33e7A99e10813F',
-    //     chainId: '0x1',
-    //   }}>
-    //   {children}
-    // </MoralisDappContext.Provider>
-
-    //USE THIS DURING PRODUCTION
-    <MoralisDappContext.Provider value={{walletAddress, chainId: '0x1'}}>
+    <MoralisDappContext.Provider
+      value={{
+        walletAddress: '0x29684Ca7D10F82b9dC7E5a447e33e7A99e10813F',
+        chainId: '0x1',
+      }}>
       {children}
     </MoralisDappContext.Provider>
+
+    //USE THIS DURING PRODUCTION
+    // <MoralisDappContext.Provider value={{ walletAddress, chainId: '0x13881' }}>
+    //   {children}
+    // </MoralisDappContext.Provider>
   );
 }
 
@@ -51,4 +72,5 @@ function useMoralisDapp() {
   return context;
 }
 
-export {MoralisDappProvider, useMoralisDapp};
+export { MoralisDappProvider, useMoralisDapp };
+
