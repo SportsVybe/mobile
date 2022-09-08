@@ -1,14 +1,11 @@
-import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
 import { useMoralis } from 'react-moralis';
 import { useWalletConnect } from '../WalletConnect';
 
-import CryptoAuth from '../Components/CryptoAuth';
 import Header from '../Components/Header';
-import HomeNavigation from './HomeNavigation';
-import TeamsScreen from '../Screens/Teams/TeamsScreen';
 import TeamScreen from '../Screens/Teams/TeamScreen';
+import TeamsScreen from '../Screens/Teams/TeamsScreen';
 
 const Stack = createStackNavigator();
 
@@ -36,7 +33,7 @@ function TeamsNavigation(): JSX.Element {
         name="Team"
         component={TeamScreen}
         // Hiding header for Navigation Drawer
-        options={{ headerTitle: props => <Header /> }}
+        // options={{ headerTitle: props => <Header /> }}
         // options={({ route }) => ({
         //   headerTitle: getHeaderTitle(route),
         // })}

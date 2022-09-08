@@ -38,7 +38,7 @@ function VenuesNavigation(): JSX.Element {
         component={VenueScreen}
         // Hiding header for Navigation Drawer
 
-        options={{ headerTitle: props => <Header /> }}
+        // options={{ headerTitle: props => <Header /> }}
         // options={({ route }) => ({
         //   headerTitle: getHeaderTitle(route),
         // })}
