@@ -37,7 +37,10 @@ function ProfileNavigation(): JSX.Element {
         component={EditProfileScreen}
         // Hiding header for Navigation Drawer
 
-        options={{ headerTitle: props => <Header /> }}
+        options={{
+          // headerTitle: props => <Header />,
+          title: 'Edit Profile',
+        }}
         // options={({ route }) => ({
         //   headerTitle: getHeaderTitle(route),
         // })}
@@ -50,7 +53,7 @@ function ProfileNavigation(): JSX.Element {
 
         options={{
           // headerTitle: props => <Header />,
-          title: 'Settings'
+          title: 'Settings',
         }}
         // options={({ route }) => ({
         //   headerTitle: getHeaderTitle(route),

@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Image, StyleSheet, Text, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import { faBell } from '@fortawesome/free-solid-svg-icons';
@@ -8,7 +8,10 @@ export default function Header() {
   return (
     <View style={styles.headerContainer}>
       <View style={styles.headerLeft}>
-        <Text>Logo</Text>
+        <Image
+          style={styles.headerLogo}
+          source={require('../assets/images/logos/sportsvybe_logo_white_bg.png')}
+        />
       </View>
       <View style={styles.headerRight}>
         <View style={styles.headerVybe}>
@@ -42,9 +45,11 @@ const styles = StyleSheet.create({
   },
   headerLeft: {
     width: '50%',
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
+  },
+  headerLogo: {
+    width: '65%',
+    height: '65%',
+    resizeMode: 'contain',    
   },
   headerRight: {
     width: '50%',
