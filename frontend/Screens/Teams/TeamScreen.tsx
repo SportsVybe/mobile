@@ -5,11 +5,10 @@ import React from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 function TeamScreen({ route }) {
-
   const navigation = useNavigation();
 
-    const { name } = route.params;
-    
+  const { name } = route.params;
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Team {name}</Text>
@@ -20,7 +19,9 @@ function TeamScreen({ route }) {
         />
         <Text style={styles.teamName}>Team Name {name}</Text>
         <Text style={styles.teamPOS}>POS {name} %</Text>
-        <Text style={styles.teamRecord}>Record (W-L-T) {name}-{name}-{name}</Text>
+        <Text style={styles.teamRecord}>
+          Record (W-T-L) {name}-{name}-{name}
+        </Text>
         <Text style={styles.teamSports}>Sports List: {name}</Text>
         <TouchableOpacity
           style={styles.button}
