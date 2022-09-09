@@ -1,15 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "moralis-logo.png",
+      "filename" : "sportsvybe_logo_transBG_blackVybe_1x.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
+      "filename" : "sportsvybe_logo_transBG_blackVybe_2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
+      "filename" : "sportsvybe_logo_transBG_blackVybe_3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
