@@ -1,11 +1,11 @@
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import React from 'react';
-import { useMoralis } from 'react-moralis';
-import { useWalletConnect } from '../WalletConnect';
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import React from "react";
+import { useMoralis } from "react-moralis";
+import { useWalletConnect } from "../WalletConnect";
 
-import CryptoAuth from '../Components/CryptoAuth';
-import HomeNavigation from './HomeNavigation';
+import LoginAuth from "../Components/LoginAuth";
+import HomeNavigation from "./HomeNavigation";
 
 const Stack = createStackNavigator();
 
@@ -22,11 +22,11 @@ function AppNavigation(): JSX.Element {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="HomeRoutes">
+      <Stack.Navigator initialRouteName="Auth">
         {/* Auth Navigator: Include Login and Signup */}
         <Stack.Screen
           name="Auth"
-          component={CryptoAuth}
+          component={LoginAuth}
           options={{ headerShown: false }}
         />
         {/* Navigation Drawer as a landing page */}

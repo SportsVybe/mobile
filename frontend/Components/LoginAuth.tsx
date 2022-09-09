@@ -2,6 +2,7 @@ import React, { createRef, useEffect, useState } from 'react';
 import {
   Dimensions,
   Image,
+  ImageBackground,
   KeyboardAvoidingView,
   ScrollView,
   StyleSheet,
@@ -21,9 +22,6 @@ import {
 import { useMoralis } from 'react-moralis';
 import { useWalletConnect } from '../WalletConnect';
 
-// import Loader from './Components/Loader';
-const windowWidth = Dimensions.get('window').width;
-const windowHeight = Dimensions.get('window').height;
 
 const LoginScreen = ({ navigation }) => {
   const connector = useWalletConnect();
@@ -70,59 +68,70 @@ const LoginScreen = ({ navigation }) => {
   return (
     <Provider>
       <View style={styles.mainBody}>
-        <ScrollView
-          keyboardShouldPersistTaps="handled"
-          contentContainerStyle={{
+        <ImageBackground
+          resizeMode="cover"
+          style={{
             flex: 1,
-            justifyContent: 'center',
-            alignContent: 'center',
-          }}>
-          <Image
+          }}
+          source={require('../assets/images/sports/basketball.jpg')}>
+          <View
             style={{
               flex: 1,
               maxWidth: '100%',
               alignSelf: 'center',
-              resizeMode: 'contain',
-            }}
-            source={require('../assets/images/logos/sportsvybe_header_logo.png')}
-          />
-          <View style={{ flex: 1 }}>
-            <KeyboardAvoidingView enabled>
-              <View
-                style={{
-                  flex: 1,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}>
-                {authError && (
-                  <Portal>
-                    <Dialog visible={visible} onDismiss={hideDialog}>
-                      <Dialog.Title>Authentication error:</Dialog.Title>
-                      <Dialog.Content>
-                        <Paragraph>
-                          {authError ? authError.message : ''}
-                        </Paragraph>
-                      </Dialog.Content>
-                      <Dialog.Actions>
-                        <Button onPress={hideDialog}>Done</Button>
-                      </Dialog.Actions>
-                    </Dialog>
-                  </Portal>
-                )}
-                {isAuthenticating && (
-                  <ActivityIndicator animating={true} color={'blue'} />
-                )}
-              </View>
-
-              <TouchableOpacity
-                style={styles.buttonStyle}
-                activeOpacity={0.5}
-                onPress={handleCryptoLogin}>
-                <Text style={styles.buttonTextStyle}>Wallet Login</Text>
-              </TouchableOpacity>
-            </KeyboardAvoidingView>
+              backgroundColor: '#000000a0',
+            }}>
+            <ScrollView
+              keyboardShouldPersistTaps="handled"
+              contentContainerStyle={{
+                flex: 1,
+                justifyContent: 'center',
+                alignContent: 'center',
+              }}>
+              <KeyboardAvoidingView enabled>
+                <Image
+                  style={{
+                    maxWidth: '100%',
+                    alignSelf: 'center',
+                    resizeMode: 'contain',
+                  }}
+                  source={require('../assets/images/logos/sportsvybe_logo_transBG_whiteVybe.png')}
+                />
+                <TouchableOpacity
+                  style={styles.buttonStyle}
+                  activeOpacity={0.5}
+                  onPress={handleCryptoLogin}>
+                  <Text style={styles.buttonTextStyle}>Wallet Login</Text>
+                </TouchableOpacity>
+                <View
+                  style={{
+                    flex: 1,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}>
+                  {authError && (
+                    <Portal>
+                      <Dialog visible={visible} onDismiss={hideDialog}>
+                        <Dialog.Title>Authentication error:</Dialog.Title>
+                        <Dialog.Content>
+                          <Paragraph>
+                            {authError ? authError.message : ''}
+                          </Paragraph>
+                        </Dialog.Content>
+                        <Dialog.Actions>
+                          <Button onPress={hideDialog}>Done</Button>
+                        </Dialog.Actions>
+                      </Dialog>
+                    </Portal>
+                  )}
+                  {isAuthenticating && (
+                    <ActivityIndicator animating={true} color={'blue'} />
+                  )}
+                </View>
+              </KeyboardAvoidingView>
+            </ScrollView>
           </View>
-        </ScrollView>
+        </ImageBackground>
       </View>
     </Provider>
   );
@@ -132,9 +141,7 @@ export default LoginScreen;
 const styles = StyleSheet.create({
   mainBody: {
     flex: 1,
-    justifyContent: 'center',
     backgroundColor: 'white',
-    alignContent: 'center',
   },
   buttonStyle: {
     backgroundColor: '#999',

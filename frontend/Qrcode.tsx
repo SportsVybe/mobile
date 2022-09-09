@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { StyleSheet, View, Alert, Text, Pressable } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
+import { Button, Modal, Portal, Provider } from "react-native-paper";
 import QR from "react-native-qrcode-svg";
-import { Modal, Portal, Button, Provider } from "react-native-paper";
 
 export type QrcodeProps = {
   readonly uri?: string;
@@ -24,12 +24,7 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     borderRadius: padding,
   },
-  centeredView: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 22,
-  },
+
   modalView: {
     margin: 20,
     backgroundColor: "white",
@@ -67,7 +62,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function Qrcode({ size = 400, uri }: QrcodeProps): JSX.Element {
+export default function Qrcode({ size = 300, uri }: QrcodeProps): JSX.Element {
   const [modalVisible, setModalVisible] = useState(false);
 
   const [visible, setVisible] = React.useState(false);
@@ -87,28 +82,14 @@ export default function Qrcode({ size = 400, uri }: QrcodeProps): JSX.Element {
           onDismiss={hideModal}
           contentContainerStyle={containerStyle}>
           <View style={styles.modalView}>
-            {/* <View
-        style={[
-          { width: size, height: size },
-          styles.center,
-          styles.qr,
-          styles.mt,
-        ]}> */}
             {typeof uri === "string" && !!uri.length && (
               // @ts-ignore
               <QR logoSize={size * 0.2} value={uri} size={size - padding * 2} />
             )}
-            {/* </View> */}
-
-            {/* <Text style={styles.modalText}>Hello World!</Text>
-          <Pressable
-            style={[styles.button, styles.buttonClose]}
-            onPress={() => setModalVisible(!modalVisible)}>
-            <Text style={styles.textStyle}>Hide Modal</Text>
-          </Pressable> */}
-            {/* </View> */}
           </View>
-          <Text>Example Modal. Click outside this area to dismiss.</Text>
+          <Text style={{ textAlign: "center" }}>
+            Click outside this area to dismiss.
+          </Text>
         </Modal>
       </Portal>
       <Button style={{ marginTop: 30 }} onPress={showModal}>
