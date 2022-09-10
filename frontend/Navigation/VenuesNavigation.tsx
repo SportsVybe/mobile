@@ -1,14 +1,11 @@
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import React from 'react';
-import { useMoralis } from 'react-moralis';
-import { useWalletConnect } from '../WalletConnect';
+import { createStackNavigator } from "@react-navigation/stack";
+import React from "react";
+import { useMoralis } from "react-moralis";
+import { useWalletConnect } from "../WalletConnect";
 
-import CryptoAuth from '../Components/CryptoAuth';
-import Header from '../Components/Header';
-import HomeNavigation from './HomeNavigation';
-import VenuesScreen from '../Screens/Venues/VenuesScreen';
-import VenueScreen from '../Screens/Venues/VenueScreen';
+import Header from "../Components/Header";
+import VenueScreen from "../Screens/Venues/VenueScreen";
+import VenuesScreen from "../Screens/Venues/VenuesScreen";
 
 const Stack = createStackNavigator();
 
@@ -24,8 +21,7 @@ function VenuesNavigation(): JSX.Element {
   } = useMoralis();
 
   return (
-    <Stack.Navigator
-      initialRouteName="VenuesScreen">
+    <Stack.Navigator initialRouteName="VenuesScreen">
       {/* Auth Navigator: Include Login and Signup */}
       <Stack.Screen
         name="Venues"

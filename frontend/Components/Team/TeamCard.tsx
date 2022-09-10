@@ -70,10 +70,13 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   teamCard: {
-    width: '100%',
+    width: '90%',
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 20,
+    borderColor: 'black',
+    borderWidth: 1,
+    borderRadius: 10,
   },
   teamCardRow: {
     flexDirection: 'row',
