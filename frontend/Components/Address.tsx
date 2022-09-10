@@ -27,7 +27,7 @@ export default function Address() {
       <TouchableOpacity
         style={styles.viewContainer}
         onPress={() => copyToClipboard()}>
-        <Blockie address={walletAddress} size={100} />
+        {/* <Blockie address={walletAddress} size={100} /> */}
 
         <Text
           style={styles.headerText}
@@ -36,7 +36,7 @@ export default function Address() {
           {walletAddress}
         </Text>
 
-        <FontAwesomeIcon icon={faCopy} size={15} color="darkgreen" />
+        <FontAwesomeIcon icon={faCopy} size={15} color="green" />
       </TouchableOpacity>
     </View>
   );

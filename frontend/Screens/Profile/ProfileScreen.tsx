@@ -1,91 +1,29 @@
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
+import { useMoralis } from 'react-moralis';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 
 import Address from '../../Components/Address';
+import { ProfileController } from '../../Components/Profile/ProfileController';
+import ProfileHeader from '../../Components/Profile/ProfileHeader';
 
-function ProfileScreen() {
+type Props = {
+
+  user?: any;
+  wallet?: string | boolean;
+  isCurrentUser: boolean;
+  isAuthenticating?: boolean;
+}
+
+function ProfileScreen(props:Props) {
   const navigation = useNavigation();
-
+const {user} = useMoralis();
   return (
     <ScrollView>
       <View style={styles.container}>
         <Text style={styles.title}>Player Profile</Text>
-        <View style={styles.profile}>
-          <View style={styles.profileHeader}>
-            <View style={styles.profileHeading}>
-              <View style={styles.profileImage}>
-                <Image
-                  style={styles.image}
-                  source={require('../assets/images/profile_placeholder.png')}
-                />
-              </View>
-              <View style={styles.profileAccountInfo}>
-                <Text style={styles.profileName}>Username: Profile 1</Text>
-                <Text style={styles.profileText}>Display Name: Profile 1</Text>
-                <Text style={styles.profileText}>Member Since: 2022</Text>
-              </View>
-            </View>
-
-            <View style={styles.buttonRow}>
-              <Address />
-              <TouchableOpacity
-                style={styles.button}
-                onPress={() =>
-                  navigation.navigate('EditProfile', { name: 'My Name' })
-                }>
-                <Text style={styles.buttonText}>Edit</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                style={styles.button}
-                onPress={() => navigation.navigate('ProfileSettings')}>
-                <Text style={styles.buttonText}>Settings</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-          <View style={styles.profileNotifications}>
-            <View style={styles.profileNotificationsBox}>
-              <Text style={styles.profileTextTitle}>Balance:</Text>
-              <Text>1 VYBE(s)</Text>
-            </View>
-            <View style={styles.profileNotificationsBox}>
-              <Text style={styles.profileTextTitle}>Rewards:</Text>
-              <Text>0</Text>
-            </View>
-            <View style={styles.profileNotificationsBox}>
-              <Text style={styles.profileTextTitle}>Challenges:</Text>
-              <Text>0</Text>
-            </View>
-            <View style={styles.profileNotificationsBox}>
-              <Text style={styles.profileTextTitle}>Invites:</Text>
-              <Text>0</Text>
-            </View>
-          </View>
-          <View style={styles.profileStats}>
-            <View style={styles.profileStatsSection}>
-              <View style={styles.profileStatsCard}>
-                <Text style={styles.profileTextTitle}>Record (W-T-L):</Text>
-                <Text>0-0-0</Text>
-              </View>
-              <View style={styles.profileStatsCard}>
-                <Text style={styles.profileTextTitle}>Winnings:</Text>
-                <Text>0 VYBE(s)</Text>
-              </View>
-            </View>
-            <View style={styles.profileStatsSection}>
-              <View style={styles.profileStatsCard}>
-                <Text style={styles.profileTextTitle}>Sportsmanship:</Text>
-                <Text>100%</Text>
-              </View>
-              <View style={styles.profileStatsCard}>
-                <Text style={styles.profileTextTitle}>Sport Preferences:</Text>
-                <Text>Basketball</Text>
-              </View>
-            </View>
-          </View>
-        </View>
+        <ProfileController isCurrentUser={props.isCurrentUser} user={props.user} />
       </View>
     </ScrollView>
   );
