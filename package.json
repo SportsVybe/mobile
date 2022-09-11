@@ -1,5 +1,5 @@
 {
-  "name": "SportsVybe",
+  "name": "sportsvybe",
   "version": "0.0.1",
   "private": true,
   "keywords": [
@@ -16,9 +16,9 @@
     "mobile"
   ],
   "scripts": {
-    "android": "react-native run-android",
-    "ios": "react-native run-ios",
-    "start": "react-native start",
+    "android": "npx react-native run-android",
+    "ios": "npx react-native run-ios",
+    "start": "npx react-native start",
     "test": "jest --config ./jest.config.js",
     "lint": "eslint .",
     "postinstall": "node_modules/.bin/rn-nodeify --install crypto,http,https,os,assert,url,stream,events --yarn"
@@ -119,6 +119,7 @@
     "lint-staged": "10.5.3",
     "platform-detect": "3.0.1",
     "prettier": "2.2.1",
+    "react-devtools": "^4.25.0",
     "react-native-codegen": "^0.0.12",
     "react-test-renderer": "17.0.1",
     "ts-node": "^10.4.0",
