@@ -1,23 +1,16 @@
-// import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { useMoralis, useNewMoralisObject } from "react-moralis";
 import { useCustomMoralis } from "../../providers/CustomMoralisProvider";
-import ProfileComponent from "./ProfileView";
+import ProfileView from "./ProfileView";
 // import Profile from "./ProfileView";
 
 type Props = {
   user?: any;
-  wallet?: string | boolean;
   isCurrentUser: boolean;
   isAuthenticating?: boolean;
 };
 
-export const ProfileController = ({
-  user,
-  wallet = false,
-  isCurrentUser = false,
-}: Props) => {
-  // const router = useRouter();
+export const ProfileController = ({ user, isCurrentUser = false }: Props) => {
   const { Moralis } = useMoralis();
   const createNewUser = useNewMoralisObject("users");
   const {
@@ -54,7 +47,6 @@ export const ProfileController = ({
       const userValue = isCurrentUser ? user.id : user;
       const userMethod = isCurrentUser ? "objectId" : "username";
       const results: any = await fetchUser(userValue, userMethod, false);
-      console.log(results);
       if (results != null && results.length != 0) {
         setUserData(results.user.attributes);
         setUserObject(results.user);
@@ -65,16 +57,14 @@ export const ProfileController = ({
         }
       } else if (!results || results.length == 0 || results == null) {
         console.log("No user found");
-
         createNewUser.save(newUser, {
           onSuccess: (user: any) => {
             setUserData(user.attributes);
-            // router.reload();
           },
         });
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -92,7 +82,7 @@ export const ProfileController = ({
         }
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -156,12 +146,11 @@ export const ProfileController = ({
   }, [username]);
 
   return (
-    <ProfileComponent
+    <ProfileView
       userData={userData}
       isCurrentUser={isCurrentUser}
       teams={teams}
       isLoading={isLoading}
-      wallet={wallet}
       userObject={userObject}
       userCounts={userCounts}
     />

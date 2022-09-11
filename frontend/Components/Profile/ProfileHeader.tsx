@@ -1,7 +1,8 @@
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Address from "../Address";
+import { Photo } from "../Photo";
 
 type Props = {
   userData: any;
@@ -9,21 +10,33 @@ type Props = {
 };
 
 function ProfileHeader({ userData, isLoading }: Props): JSX.Element {
-  console.log(userData);
   const navigation = useNavigation();
   return (
     <View style={styles.profileHeader}>
       <View style={styles.profileHeading}>
         <View style={styles.profileImage}>
-          <Image
-            style={styles.image}
-            source={require("../../assets/images/profile_placeholder.png")}
+          <Photo
+            src={userData.userPhoto}
+            type="profile"
+            isLoading={isLoading}
           />
         </View>
         <View style={styles.profileAccountInfo}>
-          <Text style={styles.profileName}>Username: {userData.username}</Text>
-          <Text style={styles.profileText}>Display Name: Profile 1</Text>
-          <Text style={styles.profileText}>Member Since: 2022</Text>
+          <Text style={styles.profileName}>
+            Username: {userData.username ? userData.username : "--"}
+          </Text>
+          <Text style={styles.profileText}>
+            Display Name:{" "}
+            {userData.userDisplayName ? userData.userDisplayName : "--"}
+          </Text>
+          <Text style={styles.profileText}>
+            Member Since:{" "}
+            {userData.createdAt
+              ? userData.createdAt.toLocaleDateString("en-US", {
+                  year: "numeric",
+                })
+              : "--"}
+          </Text>
         </View>
       </View>
 

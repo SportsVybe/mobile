@@ -8,6 +8,8 @@ export type User = {
   userPOS: number;
   userWins: number;
   userLosses: number;
+  userWinnings: number;
+  userSportsPreferences: string[];
   get: (key: string) => any;
   save: (key: {}) => any;
   isSaving: boolean;

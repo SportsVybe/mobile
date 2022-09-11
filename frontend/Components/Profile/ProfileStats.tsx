@@ -1,35 +1,48 @@
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
+import { User } from "../../configs/types";
+import { capitalizeWord } from "../../helpers/formatters";
 
 type Props = {
-  userData: any;
+  userData: User;
   isLoading: boolean;
 };
 
 function ProfileStats({ userData, isLoading }: Props): JSX.Element {
-  console.log(userData);
   const navigation = useNavigation();
   return (
     <View style={styles.profileStats}>
       <View style={styles.profileStatsSection}>
         <View style={styles.profileStatsCard}>
           <Text style={styles.profileTextTitle}>Record (W-T-L):</Text>
-          <Text>0-0-0</Text>
+          <Text>
+            {userData.userWins}-0-{userData.userLosses}
+          </Text>
         </View>
         <View style={styles.profileStatsCard}>
           <Text style={styles.profileTextTitle}>Winnings:</Text>
-          <Text>0 VYBE</Text>
+          <Text>{userData.userWinnings} VYBE</Text>
         </View>
       </View>
       <View style={styles.profileStatsSection}>
         <View style={styles.profileStatsCard}>
           <Text style={styles.profileTextTitle}>Sportsmanship:</Text>
-          <Text>100%</Text>
+          <Text>{userData.userPOS}%</Text>
         </View>
         <View style={styles.profileStatsCard}>
           <Text style={styles.profileTextTitle}>Sport Preferences:</Text>
-          <Text>Basketball</Text>
+          <Text style={styles.profilePreferences}>
+            {userData.userSportsPreferences &&
+              userData.userSportsPreferences.map((sport: string, i: number) => {
+                return (
+                  <Text key={i}>
+                    {capitalizeWord(sport)}
+                    {"\n"}
+                  </Text>
+                );
+              })}
+          </Text>
         </View>
       </View>
     </View>
@@ -94,6 +107,9 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginBottom: 10,
   },
+  profilePreferences: {
+    textAlign: "center",
+  },
   profileNotificationsBox: {
     alignItems: "center",
     justifyContent: "center",
@@ -132,8 +148,8 @@ const styles = StyleSheet.create({
   },
   profileStatsSection: {
     flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: "flex-start",
+    justifyContent: "flex-start",
   },
   profileStatsCard: {
     flex: 1,

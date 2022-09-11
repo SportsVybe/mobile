@@ -1,22 +1,23 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { teamsData } from "../../Screens/Teams/TeamsScreen";
-import TeamCard from "../Team/TeamCard";
+import { Team, User } from "../../configs/types";
+import { TeamCard } from "../Teams/TeamCard";
+// import { teamsData } from "../../Screens/Teams/TeamsScreen";
+// import { TeamCard } from "../Teams/TeamCard";
 import ProfileHeader from "./ProfileHeader";
 import ProfileNotifications from "./ProfileNotifications";
 import ProfileStats from "./ProfileStats";
 
 type Props = {
-  userData: any;
+  userData: User;
   isCurrentUser: boolean;
-  teams: any;
+  teams: Team[];
   isLoading: boolean;
-  wallet: any;
   userObject: any;
   userCounts: any;
 };
 
-function ProfileComponent(props: Props): JSX.Element {
+function ProfileView(props: Props): JSX.Element {
   return (
     <View style={styles.profile}>
       <ProfileHeader userData={props.userData} isLoading={props.isLoading} />
@@ -27,15 +28,17 @@ function ProfileComponent(props: Props): JSX.Element {
       <ProfileStats userData={props.userData} isLoading={props.isLoading} />
       <View style={styles.profile}>
         <Text style={styles.title}>Teams</Text>
-        {teamsData.map(team => (
-          <TeamCard key={team.id} team={team} />
-        ))}
+        {props.teams.length ? (
+          props.teams.map(team => <TeamCard key={team.id} team={team} />)
+        ) : (
+          <Text>No Teams</Text>
+        )}
       </View>
     </View>
   );
 }
 
-export default ProfileComponent;
+export default ProfileView;
 
 const styles = StyleSheet.create({
   container: {
