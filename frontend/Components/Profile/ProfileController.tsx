@@ -23,12 +23,10 @@ export const ProfileController = ({ user, isCurrentUser = false }: Props) => {
   const [teams, setTeams] = useState<any>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isUserCountsLoading, setIsUserCountsLoading] = useState(false);
-  const [userCounts, setUserCounts] = useState({});
-  const [userObject, setUserObject] = useState({
-    rewards: 0,
-    invites: 0,
-    challenges: 0,
-  });
+  const [userObject, setUserObject] = useState({});
+  const [rewards, setRewards] = useState<any>([]);
+  const [invites, setInvites] = useState<any>([]);
+  const [challenges, setChallenges] = useState<any>([]);
   const [username, setUsername] = useState("");
   let newUser = {};
   if (isCurrentUser) {
@@ -88,10 +86,7 @@ export const ProfileController = ({ user, isCurrentUser = false }: Props) => {
 
   const fetchUserInvites = async () => {
     await cloudFunction("getUserInvites", {})
-      .then(invites => {
-        console.log("invites", invites);
-        setUserCounts({ invites: invites.pending.length, ...userCounts });
-      })
+      .then(invites => setInvites(invites.pending.length))
       .catch(error => {
         console.error("Error fetching invites");
       });
@@ -99,10 +94,7 @@ export const ProfileController = ({ user, isCurrentUser = false }: Props) => {
 
   const fetchUserRewards = async () => {
     await cloudFunction("getUserRewards", {})
-      .then(rewards => {
-        console.log("rewards", rewards);
-        setUserCounts({ rewards: rewards.available.length, ...userCounts });
-      })
+      .then(rewards => setRewards(rewards.available.length))
       .catch(error => {
         console.error("Error fetching rewards");
       });
@@ -110,16 +102,11 @@ export const ProfileController = ({ user, isCurrentUser = false }: Props) => {
 
   const fetchUserChallenges = async () => {
     await cloudFunction("getUserChallenges", {})
-      .then(challenges => {
-        console.log("challenges", challenges);
-
-        setUserCounts({ challenges: challenges.active.length, ...userCounts });
-      })
+      .then(challenges => setChallenges(challenges.active.length))
       .catch(error => {
         console.error("Error fetching challenges");
       });
   };
-  console.log(userCounts);
 
   useEffect(() => {
     if (user) {
@@ -152,7 +139,9 @@ export const ProfileController = ({ user, isCurrentUser = false }: Props) => {
       teams={teams}
       isLoading={isLoading}
       userObject={userObject}
-      userCounts={userCounts}
+      rewards={rewards}
+      invites={invites}
+      challenges={challenges}
     />
   );
 };

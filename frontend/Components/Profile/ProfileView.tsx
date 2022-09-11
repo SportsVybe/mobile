@@ -1,6 +1,6 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { Team, User } from "../../configs/types";
+import { Challenge, Invite, Reward, Team, User } from "../../configs/types";
 import { TeamCard } from "../Teams/TeamCard";
 // import { teamsData } from "../../Screens/Teams/TeamsScreen";
 // import { TeamCard } from "../Teams/TeamCard";
@@ -14,7 +14,9 @@ type Props = {
   teams: Team[];
   isLoading: boolean;
   userObject: any;
-  userCounts: any;
+  invites: number;
+  challenges: number;
+  rewards: number;
 };
 
 function ProfileView(props: Props): JSX.Element {
@@ -22,7 +24,9 @@ function ProfileView(props: Props): JSX.Element {
     <View style={styles.profile}>
       <ProfileHeader userData={props.userData} isLoading={props.isLoading} />
       <ProfileNotifications
-        userData={props.userData}
+        rewards={props.rewards}
+        invites={props.invites}
+        challenges={props.challenges}
         isLoading={props.isLoading}
       />
       <ProfileStats userData={props.userData} isLoading={props.isLoading} />

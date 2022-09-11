@@ -1,32 +1,41 @@
-import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
+import { tokenContractAddress } from "../../configs/configs";
+import useERC20Balance from "../../hooks/useERC20balance";
+import { useMoralisDapp } from "../../providers/MoralisDappProvider";
+import VYBEBalance from "../Assets/VYBEBalance";
 
 type Props = {
-  userData: any;
+  invites: number;
+  challenges: number;
+  rewards: number;
   isLoading: boolean;
 };
 
-function ProfileNotifications({ userData, isLoading }: Props): JSX.Element {
-  console.log(userData);
-  const navigation = useNavigation();
+function ProfileNotifications({
+  rewards,
+  challenges,
+  invites,
+  isLoading,
+}: Props): JSX.Element {
+
   return (
     <View style={styles.profileNotifications}>
       <View style={styles.profileNotificationsBox}>
         <Text style={styles.profileTextTitle}>Balance:</Text>
-        <Text>1 VYBE</Text>
+        <Text><VYBEBalance/></Text>
       </View>
       <View style={styles.profileNotificationsBox}>
         <Text style={styles.profileTextTitle}>Rewards:</Text>
-        <Text>0</Text>
+        <Text>{rewards}</Text>
       </View>
       <View style={styles.profileNotificationsBox}>
         <Text style={styles.profileTextTitle}>Challenges:</Text>
-        <Text>0</Text>
+        <Text>{challenges}</Text>
       </View>
       <View style={styles.profileNotificationsBox}>
         <Text style={styles.profileTextTitle}>Invites:</Text>
-        <Text>0</Text>
+        <Text>{invites}</Text>
       </View>
     </View>
   );

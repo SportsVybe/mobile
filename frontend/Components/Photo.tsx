@@ -82,10 +82,9 @@ const parkImg = () => {
 
 const styles = StyleSheet.create({
   image: {
-    width: 60,
-    height: 60,
+    width: 80,
+    height: 80,
     borderRadius: 100,
-    padding: 10,
     marginVertical: 10,
   },
 });
