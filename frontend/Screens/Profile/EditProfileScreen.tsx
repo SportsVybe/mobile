@@ -15,7 +15,7 @@ function EditProfileScreen({ route }) {
       <View style={styles.profile}>
         <Image
           style={styles.image}
-          source={require('../assets/images/profile_placeholder.png')}
+          source={require("../../assets/images/placeholders/profile_placeholder.png")}
         />
         <Text style={styles.profileAddress}>Address {name}</Text>
         <Text style={styles.profileAddress}>
@@ -23,7 +23,7 @@ function EditProfileScreen({ route }) {
         </Text>
         <Text style={styles.profileAddress}>Zip {name}</Text>
       </View>
-      <TouchableOpacity style={styles.button} onPress={() => alert('check-in')}>
+      <TouchableOpacity style={styles.button} onPress={() => alert("Save profile")}>
         <Text style={styles.buttonText}>Save</Text>
       </TouchableOpacity>
     </View>
