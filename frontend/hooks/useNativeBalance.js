@@ -1,13 +1,13 @@
-import {useEffect, useState} from 'react';
-import {useMoralis, useMoralisWeb3Api} from 'react-moralis';
-import {useMoralisDapp} from '../providers/MoralisDappProvider/MoralisDappProvider';
-import {getNativeByChain} from '../utils/getNativeByChain';
-import {n4} from '../utils/formatters';
+import { useEffect, useState } from "react";
+import { useMoralis, useMoralisWeb3Api } from "react-moralis";
+import { useMoralisDapp } from "../providers/MoralisDappProvider";
+import { n4 } from "../utils/formatters";
+import { getNativeByChain } from "../utils/getNativeByChain";
 
 const useNativeBalance = chain => {
-  const {isInitialized, Moralis} = useMoralis();
-  const {account} = useMoralisWeb3Api();
-  const {walletAddress, chainId} = useMoralisDapp();
+  const { isInitialized, Moralis } = useMoralis();
+  const { account } = useMoralisWeb3Api();
+  const { walletAddress, chainId } = useMoralisDapp();
   const [nativeBalance, setNativeBalance] = useState();
   const [assets, setAssets] = useState();
 
@@ -32,7 +32,7 @@ const useNativeBalance = chain => {
   const fetchNativeBalance = async () => {
     //pick from passed down chain into component or default app level chain
     const chainFinal = chain || chainId;
-    const options = {address: walletAddress, chain: chainFinal};
+    const options = { address: walletAddress, chain: chainFinal };
 
     return await account
       .getNativeBalance(options)
@@ -40,7 +40,7 @@ const useNativeBalance = chain => {
       .catch(e => alert(e.message));
   };
 
-  return {fetchNativeBalance, nativeBalance};
+  return { fetchNativeBalance, nativeBalance };
 };
 
 export default useNativeBalance;

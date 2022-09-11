@@ -1,26 +1,13 @@
-import React, { useState } from "react";
-import { useMoralis } from "react-moralis";
-import {
-  FlatList,
-  View,
-  Text,
-  Image,
-  StyleSheet,
-  Pressable,
-  ActivityIndicator,
-  Clipboard,
-  Linking,
-  Alert,
-} from "react-native";
-import { getEllipsisTxt } from "../../utils/formatters";
-import { Divider, Card, Button, Tooltip } from "@ui-kitten/components";
 import { faCopy } from "@fortawesome/free-regular-svg-icons";
 import { faExternalLinkAlt } from "@fortawesome/free-solid-svg-icons";
+import { Button, Card, Divider, Tooltip } from "@ui-kitten/components";
+import React, { useState } from "react";
+import { Clipboard, Linking, StyleSheet, Text, View } from "react-native";
 
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import { getExplorer } from "../../helpers/networks";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { useMoralisDapp } from "../../providers/MoralisDappProvider/MoralisDappProvider";
+import { getExplorer } from "../../helpers/networks";
+import { useMoralisDapp } from "../../providers/MoralisDappProvider";
 
 function TransactionDetails(props) {
   const [tipVisible, setTipVisible] = useState(false);
@@ -57,7 +44,7 @@ function TransactionDetails(props) {
             Linking.openURL(
               `${getExplorer(chainId)}/tx/${
                 props?.transactionDetails.transaction_hash
-              }`
+              }`,
             )
           }
           dataDetectorType={"link"}>

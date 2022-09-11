@@ -1,14 +1,13 @@
-import React, {useState} from 'react';
-import {View, Pressable, StyleSheet, Image, Text, FlatList} from 'react-native';
-import {useMoralis} from 'react-moralis';
-import {useNFTBalance} from '../../hooks/useNFTBalance';
-import {useMoralisDapp} from '../../providers/MoralisDappProvider/MoralisDappProvider';
-import {Divider, Card} from '@ui-kitten/components';
+import React from 'react';
+import { useMoralis } from 'react-moralis';
+import { FlatList, Image, StyleSheet, Text, View } from 'react-native';
+import { useNFTBalance } from '../../hooks/useNFTBalance';
+import { useMoralisDapp } from '../../providers/MoralisDappProvider';
 // import Animation from '../../splashLottie1.json';
 // import LottieView from "lottie-react-native";
-import {ActivityIndicator} from 'react-native-paper';
+import { ActivityIndicator } from 'react-native-paper';
 
-import {getNativeByChain} from '../../helpers/networks';
+import { getNativeByChain } from '../../helpers/networks';
 
 const NFTAssets = () => {
   const {NFTBalance, isLoading} = useNFTBalance();

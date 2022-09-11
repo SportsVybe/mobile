@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   Image,
 } from 'react-native';
-import {useMoralisDapp} from '../providers/MoralisDappProvider/MoralisDappProvider';
+import {useMoralisDapp} from '../providers/MoralisDappProvider';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faCopy} from '@fortawesome/free-solid-svg-icons';
 import {Tooltip} from '@ui-kitten/components';

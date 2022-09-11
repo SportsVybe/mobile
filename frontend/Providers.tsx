@@ -15,7 +15,7 @@ import {
 import * as eva from "@eva-design/eva";
 import { ApplicationProvider } from "@ui-kitten/components";
 import { CustomMoralisProvider } from "./providers/CustomMoralisProvider";
-import { MoralisDappProvider } from "./providers/MoralisDappProvider/MoralisDappProvider";
+import { MoralisDappProvider } from "./providers/MoralisDappProvider";
 
 interface ProvidersProps {
   readonly children: JSX.Element;
@@ -61,7 +61,7 @@ export const Providers = ({ children }: ProvidersProps) => {
         serverUrl={serverUrl}
         environment={environment}>
         <MoralisDappProvider>
-          <ApplicationProvider {...eva} theme={eva.dark}>
+          <ApplicationProvider {...eva} theme={eva.light}>
             <CustomMoralisProvider>
               {children}
             </CustomMoralisProvider>
