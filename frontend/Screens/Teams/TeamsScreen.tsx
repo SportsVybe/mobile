@@ -4,7 +4,7 @@ import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-import TeamCard from "../../Components/Team/TeamCard";
+import { TeamsController } from "../../Components/Teams/TeamsController";
 
 export const teamsData = [
   {
@@ -29,9 +29,7 @@ function TeamsScreen() {
     <ScrollView>
       <View style={styles.container}>
         <Text style={styles.title}>Teams</Text>
-        {teamsData.map(team => (
-          <TeamCard key={team.id} team={team} />
-        ))}
+        <TeamsController />
       </View>
     </ScrollView>
   );

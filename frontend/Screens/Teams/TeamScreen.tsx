@@ -1,8 +1,8 @@
 // new screen
 
-import { useNavigation } from '@react-navigation/native';
-import React from 'react';
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { useNavigation } from "@react-navigation/native";
+import React from "react";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 function TeamScreen({ route }) {
   const navigation = useNavigation();
@@ -15,7 +15,7 @@ function TeamScreen({ route }) {
       <View style={styles.team}>
         <Image
           style={styles.image}
-          source={require('../assets/images/team_placeholder.png')}
+          source={require("../../assets/images/placeholders/team_placeholder.png")}
         />
         <Text style={styles.teamName}>Team Name {name}</Text>
         <Text style={styles.teamPOS}>POS {name} %</Text>
@@ -38,19 +38,19 @@ export default TeamScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
   },
   title: {
     fontSize: 20,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 20,
   },
   team: {
-    width: '100%',
-    alignItems: 'center',
-    justifyContent: 'center',
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "center",
     marginBottom: 20,
   },
   image: {
@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
   },
   teamName: {
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 10,
   },
   teamPOS: {
@@ -76,16 +76,16 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   button: {
-    backgroundColor: '#315399',
+    backgroundColor: "#315399",
     padding: 10,
     borderRadius: 5,
     width: 200,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
     marginTop: 10,
   },
   buttonText: {
-    color: '#fff',
+    color: "#fff",
     fontSize: 16,
   },
 });
