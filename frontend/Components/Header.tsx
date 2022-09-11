@@ -1,36 +1,41 @@
-import React from "react";
+import React, { Suspense } from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 import { faBell } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import VYBEBalance from "./Assets/VYBEBalance";
 export default function Header() {
   return (
-    <View style={styles.headerContainer}>
-      <View style={styles.headerLeft}>
-        <Image
-          style={styles.headerLogo}
-          source={require("../assets/images/logos/sportsvybe_logo_whiteBG_blackVybe.png")}
-        />
-      </View>
-      <View style={styles.headerRight}>
-        <View style={styles.headerVybe}>
-          <TouchableOpacity>
-            <Text style={styles.vybeText}>100 VYBE</Text>
-          </TouchableOpacity>
+    <Suspense fallback={<Text>Loading...</Text>}>
+      <View style={styles.headerContainer}>
+        <View style={styles.headerLeft}>
+          <Image
+            style={styles.headerLogo}
+            source={require("../assets/images/logos/sportsvybe_logo_whiteBG_blackVybe.png")}
+          />
         </View>
-        <View style={styles.headerBell}>
-          <TouchableOpacity>
-            <View style={styles.headerNotification}>
-              <FontAwesomeIcon icon={faBell} color={"black"} size={20} />
-            </View>
-            <View style={styles.notificationBadge}>
-              <Text style={styles.notificationBadgeText}>1</Text>
-            </View>
-          </TouchableOpacity>
+        <View style={styles.headerRight}>
+          <View style={styles.headerVybe}>
+            <TouchableOpacity>
+              <View>
+                <VYBEBalance header />
+              </View>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.headerBell}>
+            <TouchableOpacity>
+              <View style={styles.headerNotification}>
+                <FontAwesomeIcon icon={faBell} color={"black"} size={20} />
+              </View>
+              <View style={styles.notificationBadge}>
+                <Text style={styles.notificationBadgeText}>1</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
-    </View>
+    </Suspense>
   );
 }
 
