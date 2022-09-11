@@ -22,9 +22,7 @@ export const TeamCard = ({ team }: Props) => {
     const { username } = user.attributes ? user.attributes : [];
     isTeamMember =
       (user &&
-        team
-          .get("get")("teamMembers")
-          .find((member: any) => member === username)) ||
+        team.get("teamMembers").find((member: any) => member === username)) ||
       false;
     isAdmin = team.get("teamAdmin") === username || false;
   }
@@ -32,17 +30,23 @@ export const TeamCard = ({ team }: Props) => {
 
   return (
     <View style={styles.teamCard}>
-      <View style={styles.teamCardRow}>
-        <Photo type="team" src={team.get("teamPhoto")} isLoading={false} />
-        <View style={styles.teamCardText}>
-          <Text style={styles.teamName}>{team.get("teamName")}</Text>
-          <Text style={styles.teamCardTitle}>POS:</Text>
-          <Text>
-            {team.get("teamPOS") ? `${team.get("teamPOS")}%` : "100%"} POS
-          </Text>
+      <View style={styles.teamCardRowTop}>
+        <View style={styles.teamCardRowCenter}>
+          <View style={styles.teamImage}>
+            <Photo type="team" src={team.get("teamPhoto")} isLoading={false} />
+          </View>
+          <View style={styles.teamCardText}>
+            <Text style={styles.teamName}>{team.get("teamName")}</Text>
+            <View style={styles.teamCardRowCenter}>
+              <Text style={styles.teamCardTitle}>POS:</Text>
+              <Text>
+                {team.get("teamPOS") ? `${team.get("teamPOS")}%` : "100%"}
+              </Text>
+            </View>
+          </View>
         </View>
       </View>
-      <View style={styles.teamCardRow}>
+      <View style={styles.teamCardRowTop}>
         <View style={styles.teamCardText}>
           <Text style={styles.teamCardTitle}>Record (W-T-L):</Text>
           <Text>
@@ -56,7 +60,12 @@ export const TeamCard = ({ team }: Props) => {
               team
                 .get("teamSportsPreferences")
                 .map((sport: string, i: number) => {
-                  return <Text key={i}>{capitalizeWord(sport)}</Text>;
+                  return (
+                    <Text key={i}>
+                      {capitalizeWord(sport)}
+                      {"\n"}
+                    </Text>
+                  );
                 })}
           </Text>
         </View>
@@ -65,7 +74,9 @@ export const TeamCard = ({ team }: Props) => {
         <TouchableOpacity
           style={styles.button}
           onPress={() => alert("Challenge or Manage")}>
-          <Text style={styles.buttonText}>Challenge/Manage</Text>
+          <Text style={styles.buttonText}>
+            {isAdmin ? "Manage" : "Challenge"}
+          </Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -93,7 +104,12 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 10,
   },
-  teamCardRow: {
+  teamCardRowTop: {
+    flexDirection: "row",
+    alignItems: "flex-start",
+    justifyContent: "center",
+  },
+  teamCardRowCenter: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
@@ -107,7 +123,7 @@ const styles = StyleSheet.create({
   teamCardTitle: {
     fontSize: 16,
     fontWeight: "bold",
-    marginBottom: 5,
+    margin: 5,
   },
   teamCardText: {
     alignItems: "center",
@@ -132,7 +148,6 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   buttonRow: {
-    
     alignItems: "center",
     justifyContent: "center",
     width: "100%",
