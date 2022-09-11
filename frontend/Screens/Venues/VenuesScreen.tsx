@@ -23,7 +23,7 @@ function VenuesScreen() {
           <Text style={styles.venueAddress}>Zip 1</Text>
           <TouchableOpacity
             style={styles.button}
-              onPress={() => navigation.navigate('Venue', { name: '1' })}
+              onPress={() => navigation.navigate('VenueScreen', { name: '1' })}
           >
             <Text style={styles.buttonText}>View Venue</Text>
           </TouchableOpacity>
@@ -39,7 +39,7 @@ function VenuesScreen() {
           <Text style={styles.venueAddress}>Zip 2</Text>
           <TouchableOpacity
             style={styles.button}
-              onPress={() => navigation.navigate('Venue', { name: '2' })}
+              onPress={() => navigation.navigate('VenueScreen', { name: '2' })}
           >
             <Text style={styles.buttonText}>View Venue</Text>
           </TouchableOpacity>

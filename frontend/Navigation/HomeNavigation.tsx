@@ -26,7 +26,7 @@ function HomeNavigation(): JSX.Element {
       // inactiveColor="#3e2465"
       barStyle={{ backgroundColor: 'white' }}>
       <Tab.Screen
-        name="Venues"
+        name="VenuesNavigation"
         options={{
           tabBarLabel: 'Venues',
           tabBarIcon: ({ color, focused }) => {

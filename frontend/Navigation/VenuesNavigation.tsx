@@ -24,13 +24,13 @@ function VenuesNavigation(): JSX.Element {
     <Stack.Navigator initialRouteName="VenuesScreen">
       {/* Auth Navigator: Include Login and Signup */}
       <Stack.Screen
-        name="Venues"
+        name="VenuesScreen"
         component={VenuesScreen}
         options={{ headerTitle: props => <Header /> }}
       />
       {/* Navigation Drawer as a landing page */}
       <Stack.Screen
-        name="Venue"
+        name="VenueScreen"
         component={VenueScreen}
         // Hiding header for Navigation Drawer
 

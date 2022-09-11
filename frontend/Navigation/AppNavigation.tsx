@@ -31,7 +31,7 @@ function AppNavigation(): JSX.Element {
         />
         {/* Navigation Drawer as a landing page */}
         <Stack.Screen
-          name="HomeRoutes"
+          name="Home"
           component={HomeNavigation}
           // Hiding header for Navigation Drawer
           options={{ headerShown: false }}

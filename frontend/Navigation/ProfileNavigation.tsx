@@ -17,7 +17,7 @@ function ProfileNavigation(): JSX.Element {
   return (
     <Stack.Navigator initialRouteName="ProfileScreen">
       <Stack.Screen
-        name="Profile"
+        name="ProfileScreen"
         component={ProfileScreen}
         options={{ headerTitle: props => <Header /> }}
       />

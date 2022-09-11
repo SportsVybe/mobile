@@ -1,12 +1,12 @@
-import React from 'react';
-import { LogBox } from 'react-native';
+import React from "react";
+import { LogBox } from "react-native";
 
-import MainNavigation from './Navigation/AppNavigation';
+import AppNavigation from "./Navigation/AppNavigation";
 
 LogBox.ignoreAllLogs();
 
 function App(): JSX.Element {
-  return <MainNavigation />;
+  return <AppNavigation />;
 }
 
 export default App;

@@ -1,6 +1,5 @@
 import React, { createRef, useEffect, useState } from 'react';
 import {
-  Dimensions,
   Image,
   ImageBackground,
   KeyboardAvoidingView,
@@ -8,7 +7,7 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native';
 import {
   ActivityIndicator,
@@ -16,7 +15,7 @@ import {
   Dialog,
   Paragraph,
   Portal,
-  Provider,
+  Provider
 } from 'react-native-paper';
 
 import { useMoralis } from 'react-moralis';
@@ -54,7 +53,7 @@ const LoginScreen = ({ navigation }) => {
           setVisible(true);
         } else {
           if (isAuthenticated) {
-            navigation.replace('HomeRoutes');
+            navigation.replace('Home');
           }
         }
       })
@@ -62,7 +61,7 @@ const LoginScreen = ({ navigation }) => {
   };
 
   useEffect(() => {
-    isAuthenticated && navigation.replace('HomeRoutes');
+    isAuthenticated && navigation.replace('Home');
   }, [isAuthenticated]);
 
   return (
