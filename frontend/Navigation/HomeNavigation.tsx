@@ -1,19 +1,18 @@
-import React from 'react';
+import React from "react";
 
-import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
-import Profile from '../Components/Profile/Profile';
+import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 
 import {
+  faBell,
   faMapMarkerAlt,
-  faStar,
   faUser,
   faUsers,
-} from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import RewardsNavigation from './RewardsNavigation';
-import TeamsNavigation from './TeamsNavigation';
-import VenuesNavigation from './VenuesNavigation';
-import ProfileNavigation from './ProfileNavigation';
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import NotificationsNavigation from "./NotificationsNavigation";
+import ProfileNavigation from "./ProfileNavigation";
+import TeamsNavigation from "./TeamsNavigation";
+import VenuesNavigation from "./VenuesNavigation";
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -24,11 +23,11 @@ function HomeNavigation(): JSX.Element {
       shifting={false}
       activeColor="#315399"
       // inactiveColor="#3e2465"
-      barStyle={{ backgroundColor: 'white' }}>
+      barStyle={{ backgroundColor: "white" }}>
       <Tab.Screen
         name="VenuesNavigation"
         options={{
-          tabBarLabel: 'Venues',
+          tabBarLabel: "Venues",
           tabBarIcon: ({ color, focused }) => {
             return (
               <FontAwesomeIcon icon={faMapMarkerAlt} color={color} size={20} />
@@ -38,9 +37,9 @@ function HomeNavigation(): JSX.Element {
         component={VenuesNavigation}
       />
       <Tab.Screen
-        name="Teams"
+        name="TeamsNavigation"
         options={{
-          tabBarLabel: 'Teams',
+          tabBarLabel: "Teams",
           tabBarIcon: ({ color }) => (
             <FontAwesomeIcon icon={faUsers} color={color} size={20} />
           ),
@@ -48,20 +47,21 @@ function HomeNavigation(): JSX.Element {
         component={TeamsNavigation}
       />
       <Tab.Screen
-        name="Rewards"
+        name="NotificationsNavigation"
         options={{
-          tabBarLabel: 'Rewards',
+          tabBarLabel: "Notifications",
           tabBarIcon: ({ color, focused }) => {
-            return <FontAwesomeIcon icon={faStar} color={color} size={20} />;
+            return <FontAwesomeIcon icon={faBell} color={color} size={20} />;
           },
+          tabBarBadge: 3,
         }}
-        component={RewardsNavigation}
+        component={NotificationsNavigation}
       />
 
       <Tab.Screen
-        name="Profile"
+        name="ProfileNavigation"
         options={{
-          tabBarLabel: 'Profile',
+          tabBarLabel: "Profile",
           tabBarIcon: ({ color }) => (
             <FontAwesomeIcon icon={faUser} color={color} size={20} />
           ),
