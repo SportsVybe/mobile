@@ -15,7 +15,7 @@ function VenuesScreen() {
         <View style={styles.venue}>
           <Image
             style={styles.image}
-            source={require('../assets/images/venue1.jpg')}
+            source={require('../../assets/images/venue1.jpg')}
           />
           <Text style={styles.venueName}>Venue 1</Text>
           <Text style={styles.venueAddress}>Address 1</Text>
@@ -31,7 +31,7 @@ function VenuesScreen() {
         <View style={styles.venue}>
           <Image
             style={styles.image}
-            source={require('../assets/images/venue2.jpg')}
+            source={require('../../assets/images/venue2.jpg')}
           />
           <Text style={styles.venueName}>Venue 2</Text>
           <Text style={styles.venueAddress}>Address 2</Text>

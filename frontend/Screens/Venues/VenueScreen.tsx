@@ -16,7 +16,7 @@ function VenueScreen({ route }) {
       <View style={styles.venue}>
         <Image
           style={styles.image}
-          source={require('../assets/images/venue1.jpg')}
+          source={require('../../assets/images/venue1.jpg')}
         />
         <Text style={styles.venueAddress}>Address {name}</Text>
         <Text style={styles.venueAddress}>
