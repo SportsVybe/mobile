@@ -9,6 +9,8 @@ import {
   faUsers,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import { useMoralis } from "react-moralis";
+import useNotifications from "../api/Moralis/useNotifications";
 import NotificationsNavigation from "./NotificationsNavigation";
 import ProfileNavigation from "./ProfileNavigation";
 import TeamsNavigation from "./TeamsNavigation";
@@ -16,13 +18,21 @@ import VenuesNavigation from "./VenuesNavigation";
 
 const Tab = createMaterialBottomTabNavigator();
 
-// const Activecolor =
 function HomeNavigation(): JSX.Element {
+  const { user } = useMoralis();
+  const {
+    availableRewards,
+    pendingInvites,
+    activeChallenges,
+  } = useNotifications({ username: user && user.get("username") });
+
+  const totalNotifications =
+    availableRewards + pendingInvites + activeChallenges;
+
   return (
     <Tab.Navigator
       shifting={false}
       activeColor="#315399"
-      // inactiveColor="#3e2465"
       barStyle={{ backgroundColor: "white" }}>
       <Tab.Screen
         name="VenuesNavigation"
@@ -53,7 +63,7 @@ function HomeNavigation(): JSX.Element {
           tabBarIcon: ({ color, focused }) => {
             return <FontAwesomeIcon icon={faBell} color={color} size={20} />;
           },
-          tabBarBadge: 3,
+          tabBarBadge: totalNotifications,
         }}
         component={NotificationsNavigation}
       />

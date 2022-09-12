@@ -1,6 +1,11 @@
 import { useEffect, useState } from "react";
 import { useMoralis } from "react-moralis";
-import { Challenge, Invite, Reward, Team } from "../../configs/types";
+import {
+  GetUserChallenges,
+  GetUserInvites,
+  GetUserRewards,
+  Team,
+} from "../../configs/types";
 import { useCustomMoralis } from "../../providers/CustomMoralisProvider";
 
 type Props = {
@@ -12,19 +17,19 @@ const useNotifications = ({ username }: Props) => {
   const { cloudFunction } = useCustomMoralis();
   const [notifications, setNotifications] = useState<Team[] | any>();
 
-  const [invites, setInvites] = useState<Invite[] | any>();
-  const [rewards, setRewards] = useState<Reward[] | any>();
-    const [challenges, setChallenges] = useState<Challenge[] | any>();
-    const [pendingInvites, setPendingInvites] = useState<number>(0);
-    const [availableRewards, setAvailableRewards] = useState<number>(0);
-    const [activeChallenges, setActiveChallenges] = useState<number>(0);
+  const [invites, setInvites] = useState<GetUserInvites>();
+  const [rewards, setRewards] = useState<GetUserRewards>();
+  const [challenges, setChallenges] = useState<GetUserChallenges>();
+  const [pendingInvites, setPendingInvites] = useState<number>(0);
+  const [availableRewards, setAvailableRewards] = useState<number>(0);
+  const [activeChallenges, setActiveChallenges] = useState<number>(0);
 
   const fetchUserInvites = async () => {
     return await cloudFunction("getUserInvites", {})
-        .then(invites => {
-            setInvites(invites)
-            setPendingInvites(invites.pending.length)
-        })
+      .then(invites => {
+        setInvites(invites);
+        setPendingInvites(invites.pending.length);
+      })
       .catch(error => {
         console.error(`Error fetching invites: ${error.toString()}`);
       });
@@ -32,10 +37,10 @@ const useNotifications = ({ username }: Props) => {
 
   const fetchUserRewards = async () => {
     return await cloudFunction("getUserRewards", {})
-        .then(rewards => {
-            setRewards(rewards)
-            setAvailableRewards(rewards.available.length)
-        })
+      .then(rewards => {
+        setRewards(rewards);
+        setAvailableRewards(rewards.available.length);
+      })
       .catch(error => {
         console.error(`Error fetching rewards: ${error.toString()}`);
       });
@@ -43,10 +48,10 @@ const useNotifications = ({ username }: Props) => {
 
   const fetchUserChallenges = async () => {
     return await cloudFunction("getUserChallenges", {})
-        .then(challenges => {
-            setChallenges(challenges)
-            setActiveChallenges(challenges.active.length)
-        })
+      .then(challenges => {
+        setChallenges(challenges);
+        setActiveChallenges(challenges.active.length);
+      })
       .catch(error => {
         console.error(`Error fetching challenges: ${error.toString()}`);
       });
@@ -72,7 +77,15 @@ const useNotifications = ({ username }: Props) => {
       .catch(e => alert(e.message));
   };
 
-  return { fetchNotifications, invites, rewards, challenges, pendingInvites, availableRewards, activeChallenges };
+  return {
+    fetchNotifications,
+    invites,
+    rewards,
+    challenges,
+    pendingInvites,
+    availableRewards,
+    activeChallenges,
+  };
 };
 
 export default useNotifications;

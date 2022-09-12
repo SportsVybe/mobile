@@ -164,6 +164,13 @@ export type GetUserChallenges = {
   error: string | null;
 };
 
+export type GetUserRewards = {
+  available: Reward[] | [];
+  claimed: Reward[] | [];
+  success: boolean;
+  error: string | null;
+};
+
 export type GetAllVenuesResponse = {
   data: Venue[] | [];
   statusCode: number;

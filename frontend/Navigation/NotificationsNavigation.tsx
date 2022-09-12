@@ -1,45 +1,35 @@
-import { createStackNavigator } from '@react-navigation/stack';
-import React from 'react';
-import { useMoralis } from 'react-moralis';
-import { useWalletConnect } from '../WalletConnect';
+import { createStackNavigator } from "@react-navigation/stack";
+import React from "react";
 
-import Header from '../Components/Header';
-import RewardsScreen from '../Screens/Rewards/RewardsScreen';
+import Header from "../Components/Header";
+import ChallengesScreen from "../Screens/Notifications/ChallengesScreen";
+import NotificationsScreen from "../Screens/Notifications/NotificationsScreen";
+import RewardsScreen from "../Screens/Notifications/RewardsScreen";
 
 const Stack = createStackNavigator();
 
 function NotificationsNavigation(): JSX.Element {
-  const connector = useWalletConnect();
-  const {
-    authenticate,
-    authError,
-    isAuthenticating,
-    isAuthenticated,
-    logout,
-    Moralis,
-  } = useMoralis();
-
   return (
-    <Stack.Navigator initialRouteName="Notifications">
+    <Stack.Navigator initialRouteName="NotificationsScreen">
       <Stack.Screen
-        name="AllNotifications"
-        component={RewardsScreen}
-        options={{ headerTitle: props => <Header /> }}
+        name="NotificationsScreen"
+        component={NotificationsScreen}
+        options={{ headerTitle: props => <Header />, title: "Notifications" }}
       />
       <Stack.Screen
-        name="Rewards"
+        name="RewardsScreen"
         component={RewardsScreen}
-        options={{ headerTitle: props => <Header /> }}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="Invites"
+        name="InvitesScreen"
         component={RewardsScreen}
-        options={{ headerTitle: props => <Header /> }}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="Challenges"
-        component={RewardsScreen}
-        options={{ headerTitle: props => <Header /> }}
+        name="ChallengesScreen"
+        component={ChallengesScreen}
+        options={{ headerShown: false }}
       />
     </Stack.Navigator>
   );
