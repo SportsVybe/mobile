@@ -1,6 +1,6 @@
-import React from "react";
+import React, { Suspense } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { Challenge, Invite, Reward, Team, User } from "../../configs/types";
+import { Team, User } from "../../configs/types";
 import { TeamCard } from "../Teams/TeamCard";
 // import { teamsData } from "../../Screens/Teams/TeamsScreen";
 // import { TeamCard } from "../Teams/TeamCard";
@@ -21,24 +21,31 @@ type Props = {
 
 function ProfileView(props: Props): JSX.Element {
   return (
-    <View style={styles.profile}>
-      <ProfileHeader userData={props.userData} isLoading={props.isLoading} />
-      <ProfileNotifications
-        rewards={props.rewards}
-        invites={props.invites}
-        challenges={props.challenges}
-        isLoading={props.isLoading}
-      />
-      <ProfileStats userData={props.userData} isLoading={props.isLoading} />
-      <View style={styles.profile}>
-        <Text style={styles.title}>Teams</Text>
-        {props.teams.length ? (
-          props.teams.map(team => <TeamCard key={team.id} team={team} />)
-        ) : (
-          <Text>No Teams</Text>
-        )}
+    <Suspense fallback={<Text>Loading...</Text>}>
+      <View style={styles.container}>
+        <View style={styles.profile}>
+          <ProfileHeader
+            userData={props.userData}
+            isLoading={props.isLoading}
+          />
+          <ProfileNotifications
+            rewards={props.rewards}
+            invites={props.invites}
+            challenges={props.challenges}
+            isLoading={props.isLoading}
+          />
+          <ProfileStats userData={props.userData} isLoading={props.isLoading} />
+          <View style={styles.profile}>
+            <Text style={styles.title}>Teams</Text>
+            {props.teams && props.teams.length ? (
+              props.teams.map(team => <TeamCard key={team.id} team={team} />)
+            ) : (
+              <Text>No Teams</Text>
+            )}
+          </View>
+        </View>
       </View>
-    </View>
+    </Suspense>
   );
 }
 
@@ -60,7 +67,6 @@ const styles = StyleSheet.create({
     width: "100%",
     alignItems: "center",
     justifyContent: "center",
-    marginBottom: 20,
   },
   profileHeader: {
     width: "100%",

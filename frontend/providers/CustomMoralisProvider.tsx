@@ -1,5 +1,6 @@
 import React, { createContext, useContext } from "react";
 import { useMoralis } from "react-moralis";
+import { GetUserResponse } from "../configs/types";
 import { validateUsername } from "../helpers/validateUsername";
 
 const defaultState = {
@@ -32,8 +33,8 @@ const defaultState = {
     value: string,
     method: string,
     includeEthAddress: boolean,
-  ) => {
-    return [];
+  ): Promise<GetUserResponse> => {
+    return { user: [], success: false, error: "", ethAddress: "" };
   },
   fetchUserTeams: async () => {
     return [];
@@ -115,7 +116,7 @@ const CustomMoralisProvider = ({ children }: { children: any }) => {
     value: string,
     method: string,
     includeEthAddress: boolean = false,
-  ): Promise<any> => {
+  ): Promise<GetUserResponse> => {
     try {
       let isUsernameValid: boolean = false;
       if (!value) return null;

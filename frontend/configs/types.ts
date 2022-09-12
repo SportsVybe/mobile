@@ -134,6 +134,13 @@ export type GetUserTeamsResponse = {
   error: string | null;
 };
 
+export type GetUserResponse = {
+  user: User | [];
+  ethAddress?: string;
+  success: boolean;
+  error: string | null;
+};
+
 export type GetTeamResponse = {
   team: Team | [];
   teamMembers: User[] | [];

@@ -1,7 +1,5 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import React from "react";
-import { useMoralis } from "react-moralis";
-import { useWalletConnect } from "../WalletConnect";
 
 import Header from "../Components/Header";
 
@@ -13,13 +11,12 @@ import ProfileSettingsScreen from "../Screens/Profile/ProfileSettingsScreen";
 const Stack = createStackNavigator();
 
 function ProfileNavigation(): JSX.Element {
-
   return (
     <Stack.Navigator initialRouteName="ProfileScreen">
       <Stack.Screen
         name="ProfileScreen"
         component={ProfileScreen}
-        options={{ headerTitle: props => <Header /> }}
+        options={{ headerTitle: props => <Header />, title: "Profile" }}
       />
       <Stack.Screen
         name="EditProfile"

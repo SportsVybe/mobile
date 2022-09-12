@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import React from "react";
+import React, { Suspense } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { User } from "../../configs/types";
 import { capitalizeWord } from "../../helpers/formatters";
@@ -12,40 +12,46 @@ type Props = {
 function ProfileStats({ userData, isLoading }: Props): JSX.Element {
   const navigation = useNavigation();
   return (
-    <View style={styles.profileStats}>
-      <View style={styles.profileStatsSection}>
-        <View style={styles.profileStatsCard}>
-          <Text style={styles.profileTextTitle}>Record (W-T-L):</Text>
-          <Text>
-            {userData.userWins}-0-{userData.userLosses}
-          </Text>
+    <Suspense fallback={<Text>Loading...</Text>}>
+      <View style={styles.profileStats}>
+        <View style={styles.profileStatsSection}>
+          <View style={styles.profileStatsCard}>
+            <Text style={styles.profileTextTitle}>Record (W-T-L):</Text>
+            <Text>
+              {userData && userData.get("userWins")}-0-
+              {userData && userData.get("userLosses")}
+            </Text>
+          </View>
+          <View style={styles.profileStatsCard}>
+            <Text style={styles.profileTextTitle}>Winnings:</Text>
+            <Text>{userData && userData.get("userWinnings")} VYBE</Text>
+          </View>
         </View>
-        <View style={styles.profileStatsCard}>
-          <Text style={styles.profileTextTitle}>Winnings:</Text>
-          <Text>{userData.userWinnings} VYBE</Text>
+        <View style={styles.profileStatsSection}>
+          <View style={styles.profileStatsCard}>
+            <Text style={styles.profileTextTitle}>Sportsmanship:</Text>
+            <Text>{userData && userData.get("userPOS")}%</Text>
+          </View>
+          <View style={styles.profileStatsCard}>
+            <Text style={styles.profileTextTitle}>Sport Preferences:</Text>
+            <Text style={styles.profilePreferences}>
+              {userData &&
+                userData.get("userSportsPreferences") &&
+                userData
+                  .get("userSportsPreferences")
+                  .map((sport: string, i: number) => {
+                    return (
+                      <Text key={i}>
+                        {capitalizeWord(sport)}
+                        {"\n"}
+                      </Text>
+                    );
+                  })}
+            </Text>
+          </View>
         </View>
       </View>
-      <View style={styles.profileStatsSection}>
-        <View style={styles.profileStatsCard}>
-          <Text style={styles.profileTextTitle}>Sportsmanship:</Text>
-          <Text>{userData.userPOS}%</Text>
-        </View>
-        <View style={styles.profileStatsCard}>
-          <Text style={styles.profileTextTitle}>Sport Preferences:</Text>
-          <Text style={styles.profilePreferences}>
-            {userData.userSportsPreferences &&
-              userData.userSportsPreferences.map((sport: string, i: number) => {
-                return (
-                  <Text key={i}>
-                    {capitalizeWord(sport)}
-                    {"\n"}
-                  </Text>
-                );
-              })}
-          </Text>
-        </View>
-      </View>
-    </View>
+    </Suspense>
   );
 }
 
@@ -142,7 +148,7 @@ const styles = StyleSheet.create({
     width: "100%",
     alignItems: "center",
     justifyContent: "center",
-    marginBottom: 20,
+    marginBottom: 5,
     marginTop: 20,
     flexDirection: "column",
   },
@@ -155,6 +161,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    margin: 10,
+    margin: 5,
   },
 });

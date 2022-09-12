@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import React from "react";
+import React, { Suspense } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Address from "../Address";
 import { Photo } from "../Photo";
@@ -11,52 +11,61 @@ type Props = {
 
 function ProfileHeader({ userData, isLoading }: Props): JSX.Element {
   const navigation = useNavigation();
+
   return (
-    <View style={styles.profileHeader}>
-      <View style={styles.profileHeading}>
-        <View style={styles.profileImage}>
-          <Photo
-            src={userData.userPhoto}
-            type="profile"
-            isLoading={isLoading}
-          />
+    <Suspense fallback={<Text>Loading...</Text>}>
+      <View style={styles.profileHeader}>
+        <View style={styles.profileHeading}>
+          <View style={styles.profileImage}>
+            <Photo
+              src={userData && userData.get("userPhoto")}
+              type="profile"
+              isLoading={isLoading}
+            />
+          </View>
+          <View style={styles.profileAccountInfo}>
+            <Text style={styles.profileName}>
+              Username:{" "}
+              {userData && userData.get("username")
+                ? userData && userData.get("username")
+                : "--"}
+            </Text>
+            <Text style={styles.profileText}>
+              Display Name:{" "}
+              {userData && userData.get("userDisplayName")
+                ? userData && userData.get("userDisplayName")
+                : "--"}
+            </Text>
+            <Text style={styles.profileText}>
+              Member Since:{" "}
+              {userData && userData.get("createdAt")
+                ? userData &&
+                  userData.get("createdAt").toLocaleDateString("en-US", {
+                    year: "numeric",
+                  })
+                : "--"}
+            </Text>
+          </View>
         </View>
-        <View style={styles.profileAccountInfo}>
-          <Text style={styles.profileName}>
-            Username: {userData.username ? userData.username : "--"}
-          </Text>
-          <Text style={styles.profileText}>
-            Display Name:{" "}
-            {userData.userDisplayName ? userData.userDisplayName : "--"}
-          </Text>
-          <Text style={styles.profileText}>
-            Member Since:{" "}
-            {userData.createdAt
-              ? userData.createdAt.toLocaleDateString("en-US", {
-                  year: "numeric",
-                })
-              : "--"}
-          </Text>
+
+        <View style={styles.buttonRow}>
+          <Address />
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() =>
+              navigation.navigate("EditProfile", { name: "My Name" })
+            }>
+            <Text style={styles.buttonText}>Edit</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => navigation.navigate("ProfileSettings")}>
+            <Text style={styles.buttonText}>Settings</Text>
+          </TouchableOpacity>
         </View>
       </View>
-
-      <View style={styles.buttonRow}>
-        <Address />
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() =>
-            navigation.navigate("EditProfile", { name: "My Name" })
-          }>
-          <Text style={styles.buttonText}>Edit</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => navigation.navigate("ProfileSettings")}>
-          <Text style={styles.buttonText}>Settings</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
+    </Suspense>
   );
 }
 
