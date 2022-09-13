@@ -1,68 +1,17 @@
 import React from "react";
-import { useMoralis } from "react-moralis";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import useNotifications from "../../api/Moralis/useNotifications";
 import ChallengeCard from "../../Components/Notifications/ChallengeCard";
 
 import { useNavigation } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
 
-const Stack = createStackNavigator();
-
-function ChallengesScreen(): JSX.Element {
-  return (
-    <Stack.Navigator
-      initialRouteName="ActiveChallenges"
-      screenOptions={{
-        presentation: "modal",
-        gestureEnabled: true,
-      }}>
-      <Stack.Screen
-        name="ActiveChallenges"
-        component={ActiveChallenges}
-        options={{ title: "Active Challenges" }}
-      />
-      <Stack.Screen
-        name="CompleteChallenges"
-        component={CompleteChallenges}
-        options={{ title: "Complete Challenges" }}
-      />
-      <Stack.Screen
-        name="CreatedChallenges"
-        component={CreatedChallenges}
-        options={{ title: "Created Challenges" }}
-      />
-    </Stack.Navigator>
-  );
-}
-
-function ActiveChallenges() {
-  const { user } = useMoralis();
-  const { challenges } = useNotifications({
-    username: user && user.get("username"),
-  });
+export function ActiveChallengesStack() {
+  const { challenges } = useNotifications();
   const navigator = useNavigation();
   return (
     <ScrollView style={{ backgroundColor: "#fff" }}>
       <View style={styles.container}>
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => navigator.navigate("CompleteChallenges")}>
-            <Text style={styles.buttonText}>
-              {challenges && challenges.complete.length} Complete
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => navigator.navigate("CreatedChallenges")}>
-            <Text style={styles.buttonText}>
-              {challenges && challenges.created.length} Created
-            </Text>
-          </TouchableOpacity>
-        </View>
-
         {challenges && challenges.active && challenges.active.length > 0 ? (
           challenges.active.map(challenge => (
             <ChallengeCard
@@ -78,11 +27,8 @@ function ActiveChallenges() {
   );
 }
 
-function CompleteChallenges() {
-  const { user } = useMoralis();
-  const { challenges } = useNotifications({
-    username: user && user.get("username"),
-  });
+export function CompleteChallengesStack() {
+  const { challenges } = useNotifications();
 
   return (
     <ScrollView style={{ backgroundColor: "#fff" }}>
@@ -101,11 +47,9 @@ function CompleteChallenges() {
     </ScrollView>
   );
 }
-function CreatedChallenges() {
-  const { user } = useMoralis();
-  const { challenges } = useNotifications({
-    username: user && user.get("username"),
-  });
+
+export function CreatedChallengesStack() {
+  const { challenges } = useNotifications();
 
   return (
     <ScrollView style={{ backgroundColor: "#fff" }}>
@@ -124,8 +68,6 @@ function CreatedChallenges() {
     </ScrollView>
   );
 }
-
-export default ChallengesScreen;
 
 const styles = StyleSheet.create({
   container: {

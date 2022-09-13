@@ -1,13 +1,10 @@
 import React, { useState } from "react";
-import { useMoralis } from "react-moralis";
 import { RefreshControl, ScrollView } from "react-native";
 import useNotifications from "../../api/Moralis/useNotifications";
 import NotificationsBar from "./NotificationsBar";
 
 export const NotificationsController = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const { user } = useMoralis();
-  const [username, setUsername] = useState(user && user.get("username"));
   const [refreshing, setRefreshing] = useState(false);
 
   const {
@@ -15,7 +12,7 @@ export const NotificationsController = () => {
     pendingInvites,
     availableRewards,
     activeChallenges,
-  } = useNotifications({ username });
+  } = useNotifications();
 
   const onRefresh = async () => {
     setRefreshing(true);

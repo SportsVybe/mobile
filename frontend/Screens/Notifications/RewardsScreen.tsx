@@ -1,57 +1,20 @@
 import React from "react";
-import { useMoralis } from "react-moralis";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import useNotifications from "../../api/Moralis/useNotifications";
 import RewardCard from "../../Components/Notifications/RewardCard";
 
 import { useNavigation } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
+import { Reward } from "../../configs/types";
 
-const Stack = createStackNavigator();
-
-function RewardsScreen(): JSX.Element {
-  return (
-    <Stack.Navigator
-      initialRouteName="AvailableRewards"
-      screenOptions={{
-        presentation: "modal",
-        gestureEnabled: true,
-      }}>
-      <Stack.Screen
-        name="AvailableRewards"
-        component={AvailableRewards}
-        options={{ title: "Available Rewards" }}
-      />
-      <Stack.Screen
-        name="ClaimedRewards"
-        component={ClaimedRewards}
-        options={{ title: "Claimed Rewards" }}
-      />
-    </Stack.Navigator>
-  );
-}
-
-function AvailableRewards() {
-  const { user } = useMoralis();
-  const { rewards } = useNotifications({
-    username: user && user.get("username"),
-  });
+export function AvailableRewardsStack() {
+  const { rewards } = useNotifications();
   const navigator = useNavigation();
   return (
     <ScrollView style={{ backgroundColor: "#fff" }}>
       <View style={styles.container}>
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => navigator.navigate("ClaimedRewards")}>
-            <Text style={styles.buttonText}>
-              {rewards && rewards.claimed.length} Claimed
-            </Text>
-          </TouchableOpacity>
-        </View>
         {rewards && rewards.available && rewards.available.length > 0 ? (
-          rewards.available.map(reward => (
+          rewards.available.map((reward: Reward) => (
             <RewardCard reward={reward} onClaim={() => alert("Claim")} />
           ))
         ) : (
@@ -62,17 +25,14 @@ function AvailableRewards() {
   );
 }
 
-function ClaimedRewards() {
-  const { user } = useMoralis();
-  const { rewards } = useNotifications({
-    username: user && user.get("username"),
-  });
+export function ClaimedRewardsStack() {
+  const { rewards } = useNotifications();
 
   return (
     <ScrollView style={{ backgroundColor: "#fff" }}>
       <View style={styles.container}>
         {rewards && rewards.claimed && rewards.claimed.length > 0 ? (
-          rewards.claimed.map(reward => (
+          rewards.claimed.map((reward: Reward) => (
             <RewardCard reward={reward} onClaim={() => alert("Claim")} />
           ))
         ) : (
@@ -82,8 +42,6 @@ function ClaimedRewards() {
     </ScrollView>
   );
 }
-
-export default RewardsScreen;
 
 const styles = StyleSheet.create({
   container: {

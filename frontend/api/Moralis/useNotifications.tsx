@@ -8,11 +8,7 @@ import {
 } from "../../configs/types";
 import { useCustomMoralis } from "../../providers/CustomMoralisProvider";
 
-type Props = {
-  username: string;
-};
-
-const useNotifications = ({ username }: Props) => {
+const useNotifications = () => {
   const { isInitialized } = useMoralis();
   const { cloudFunction } = useCustomMoralis();
   const [notifications, setNotifications] = useState<Team[] | any>();
