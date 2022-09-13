@@ -8,12 +8,10 @@ import WalletConnectProvider, {
   WalletConnectProviderProps,
 } from "./WalletConnect";
 //import { expo } from "../app.json";
-import {
-  REACT_APP_MORALIS_APPLICATION_ID,
-  REACT_APP_MORALIS_SERVER_URL,
-} from "@env";
 import * as eva from "@eva-design/eva";
 import { ApplicationProvider } from "@ui-kitten/components";
+
+import { moralis } from "./configs/configs";
 import { CustomMoralisProvider } from "./providers/CustomMoralisProvider";
 import { MoralisDappProvider } from "./providers/MoralisDappProvider";
 
@@ -24,8 +22,8 @@ interface ProvidersProps {
 /**
  * Initialization of Moralis
  */
-const appId = REACT_APP_MORALIS_APPLICATION_ID;
-const serverUrl = REACT_APP_MORALIS_SERVER_URL;
+const appId = moralis.MORALIS_APP_ID;
+const serverUrl = moralis.MORALIS_SERVER_URL;
 const environment = "native";
 // Initialize Moralis with AsyncStorage to support react-native storage
 Moralis.setAsyncStorage(AsyncStorage);
