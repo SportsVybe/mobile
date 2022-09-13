@@ -2,8 +2,8 @@ import React, { Suspense } from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
-import { faBell } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+// import { faBell } from "@fortawesome/free-solid-svg-icons";
+// import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import VYBEBalance from "./Assets/VYBEBalance";
 export default function Header() {
   return (
@@ -23,7 +23,7 @@ export default function Header() {
               </View>
             </TouchableOpacity>
           </View>
-          <View style={styles.headerBell}>
+          {/* <View style={styles.headerBell}>
             <TouchableOpacity>
               <View style={styles.headerNotification}>
                 <FontAwesomeIcon icon={faBell} color={"black"} size={20} />
@@ -32,7 +32,7 @@ export default function Header() {
                 <Text style={styles.notificationBadgeText}>1</Text>
               </View>
             </TouchableOpacity>
-          </View>
+          </View> */}
         </View>
       </View>
     </Suspense>
@@ -52,8 +52,9 @@ const styles = StyleSheet.create({
     width: "50%",
   },
   headerLogo: {
-    width: "65%",
-    height: "65%",
+    width: "100%",
+    maxWidth: 175,
+    height: "100%",
     resizeMode: "contain",
   },
   headerRight: {
@@ -66,7 +67,11 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-    paddingRight: 10,
+    padding: 8,
+    borderColor: "black",
+    borderWidth: 1,
+    borderRadius: 5,
+    marginRight: 10,
   },
   headerBell: {
     flexDirection: "row",

@@ -26,10 +26,11 @@ function VYBEBalance({ header = false }): JSX.Element {
 
   return (
     <Suspense fallback={<Text>Loading...</Text>}>
-      <View>
-        <Text style={header && styles.vybeText}>
-          {tokenBalanceValue || 0} VYBE
+      <View style={styles.row}>
+        <Text style={header && styles.vybeAmount}>
+          {tokenBalanceValue || 0}
         </Text>
+        <Text style={styles.tokenName}>VYBE</Text>
       </View>
     </Suspense>
   );
@@ -38,8 +39,17 @@ function VYBEBalance({ header = false }): JSX.Element {
 export default VYBEBalance;
 
 const styles = StyleSheet.create({
-  vybeText: {
+  row: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  vybeAmount: {
     fontSize: 20,
     fontWeight: "bold",
+  },
+  tokenName: {
+    fontSize: 12,
+    fontWeight: "bold",
+    marginLeft: 5,
   },
 });
