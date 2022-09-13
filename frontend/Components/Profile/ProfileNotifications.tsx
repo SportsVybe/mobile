@@ -1,8 +1,5 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { tokenContractAddress } from "../../configs/configs";
-import useERC20Balance from "../../hooks/useERC20balance";
-import { useMoralisDapp } from "../../providers/MoralisDappProvider";
 import VYBEBalance from "../Assets/VYBEBalance";
 
 type Props = {
@@ -18,12 +15,13 @@ function ProfileNotifications({
   invites,
   isLoading,
 }: Props): JSX.Element {
-
   return (
     <View style={styles.profileNotifications}>
       <View style={styles.profileNotificationsBox}>
         <Text style={styles.profileTextTitle}>Balance:</Text>
-        <Text><VYBEBalance/></Text>
+        <Text>
+          <VYBEBalance />
+        </Text>
       </View>
       <View style={styles.profileNotificationsBox}>
         <Text style={styles.profileTextTitle}>Rewards:</Text>
