@@ -5,7 +5,12 @@ import { useAppState } from "../../providers/AppStateProvider";
 import VenuesView from "./VenuesView";
 
 export const VenuesController = () => {
-  const { venues, setVenues, venuesError, setVenuesError } = useAppState();
+  const {
+    venues,
+    setVenues,
+    venuesErrorState,
+    setVenuesErrorState,
+  } = useAppState();
   const [isLoading, setIsLoading] = React.useState(true);
 
   const fetchVenues = async () => {
@@ -15,7 +20,7 @@ export const VenuesController = () => {
       if (!response || !response.statusCode) return [];
       if (response.statusCode === 200) return response.data;
       if (response.statusCode === 404) return [];
-      if (response.statusCode === 500) setVenuesError(true);
+      if (response.statusCode === 500) setVenuesErrorState(true);
       return [];
     } catch (error) {
       console.error(`Error fetching venues: ${error.toString()}`);
@@ -23,16 +28,15 @@ export const VenuesController = () => {
   };
 
   useEffect(() => {
-    fetchVenues()
-      .then(setVenues)
-      .then(() => setIsLoading(false))
-      .catch(error => {
-        setIsLoading(false);
-        setVenuesError(true);
-      });
+    //   fetchVenues()
+    //     .then(setVenues)
+    //     .then(() => setIsLoading(false))
+    //     .catch(error => {
+    //       setIsLoading(false);
+    //       setVenuesErrorState(true);
+    //     });
   }, []);
 
-  console.log("venuesController", venues);
   return venues && !isLoading ? (
     <View style={styles.container}>
       <VenuesView venues={venues} isLoading={isLoading} />
@@ -40,7 +44,7 @@ export const VenuesController = () => {
   ) : (
     <View>
       <Text>
-        {!venuesError
+        {!venuesErrorState
           ? "Loading...."
           : "Error! Please try another search or refresh the page"}
       </Text>
