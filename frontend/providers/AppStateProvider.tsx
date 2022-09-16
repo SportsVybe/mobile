@@ -1,26 +1,31 @@
 import React, { createContext, useState } from "react";
-import { Venue } from "../configs/types";
+import { Team, Venue } from "../configs/types";
 
 const defaultState = {
   venues: [],
-  setVenues: venues => {},
-  venuesError: false,
-  setVenuesError: error => {},
+  setVenues: (venues: Venue[]) => {},
+  venuesErrorState: false,
+  setVenuesErrorState: (errorState: boolean) => {},
+  teams: [],
+  setTeams: (teams: Team[]) => {},
 };
 
 const AppStateContext = createContext(defaultState);
 
 function AppStateProvider({ children }) {
   const [venues, setVenues] = useState<Venue[]>();
-  const [venuesError, setVenuesError] = useState<boolean>(false);
-  const [filteredVenues, setFilteredVenues] = useState<Venue[]>();
+  const [venuesErrorState, setVenuesErrorState] = useState<boolean>(false);
+  const [teams, setTeams] = useState<Team[]>();
+
   return (
     <AppStateContext.Provider
       value={{
         venues,
         setVenues,
-        venuesError,
-        setVenuesError,
+        venuesErrorState,
+        setVenuesErrorState,
+        teams,
+        setTeams,
       }}>
       {children}
     </AppStateContext.Provider>
