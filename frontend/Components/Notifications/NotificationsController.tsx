@@ -22,8 +22,8 @@ export const NotificationsController = () => {
         setRefreshing(false);
         setIsLoading(false);
       })
-      .catch(err => {
-        console.log(err);
+      .catch(error => {
+        console.log(error);
       });
   };
 

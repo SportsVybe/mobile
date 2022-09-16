@@ -38,8 +38,6 @@ export default function VenuesFilterView({ navigation }) {
   };
 
   const applySearch = () => {
-    console.log("value", value);
-
     let searchValue: string | number;
     let searchAttribute: string;
     if (value === "featured") {

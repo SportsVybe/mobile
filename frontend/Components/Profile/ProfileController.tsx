@@ -27,7 +27,7 @@ export const ProfileController = ({ user, isCurrentUser = false }: Props) => {
     pendingInvites,
     availableRewards,
     activeChallenges,
-  } = useNotifications({ username });
+  } = useNotifications();
 
   const { userTeams, fetchUserTeams } = useUserTeams({ username });
 
@@ -45,8 +45,8 @@ export const ProfileController = ({ user, isCurrentUser = false }: Props) => {
         setRefreshing(false);
         setIsLoading(false);
       })
-      .catch(err => {
-        console.log(err);
+      .catch(error => {
+        console.log(error);
       });
   };
 
