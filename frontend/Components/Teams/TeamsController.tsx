@@ -1,17 +1,17 @@
-import React, { Suspense, useEffect, useState } from "react";
-import { Text, View } from "react-native";
-import { Team } from "../../configs/types";
+import React, { useEffect, useState } from "react";
+import { StyleSheet, Text, View } from "react-native";
+import { useAppState } from "../../providers/AppStateProvider";
 import { useCustomMoralis } from "../../providers/CustomMoralisProvider";
-import { TeamCard } from "./TeamCard";
-
-// import TeamsFilter from "./TeamsFilter";
-// import TeamsView from "./TeamsView";
+import TeamsView from "./TeamsView";
 
 export const TeamsController = () => {
-  const [teams, setTeams] = useState<Team[] | []>([]);
+  const {
+    teams,
+    setTeams,
+    teamsErrorState,
+    setTeamsErrorState,
+  } = useAppState();
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(false);
-  const [isSearching, setIsSearching] = useState(false);
 
   const { cloudFunction } = useCustomMoralis();
   const fetchTeams = async () => {
@@ -30,18 +30,30 @@ export const TeamsController = () => {
     fetchTeams()
       .then(setTeams)
       .then(() => setIsLoading(false))
-      .catch(setError);
+      .catch(setTeamsErrorState);
   }, []);
 
-  return (
-    teams &&
-    !isLoading && (
-      <Suspense fallback={<Text>Loading...</Text>}>
-        <View>
-          {teams &&
-            teams.map((team): any => <TeamCard key={team.id} team={team} />)}
-        </View>
-      </Suspense>
-    )
+  return teams && !isLoading ? (
+    <View style={styles.container}>
+      <TeamsView teams={teams} isLoading={isLoading} />
+    </View>
+  ) : (
+    <View style={styles.container}>
+      <Text>
+        {!teamsErrorState
+          ? "Loading...."
+          : "Error! Please try another search or refresh the page"}
+      </Text>
+    </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+});

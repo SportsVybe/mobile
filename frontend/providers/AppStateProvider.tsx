@@ -8,6 +8,8 @@ const defaultState = {
   setVenuesErrorState: (errorState: boolean) => {},
   teams: [],
   setTeams: (teams: Team[]) => {},
+  teamsErrorState: false,
+  setTeamsErrorState: (errorState: boolean) => {},
 };
 
 const AppStateContext = createContext(defaultState);
@@ -17,6 +19,7 @@ function AppStateProvider({ children }) {
   const [venuesErrorState, setVenuesErrorState] = useState<boolean>(false);
   const [teams, setTeams] = useState<Team[]>();
 
+  const [teamsErrorState, setTeamsErrorState] = useState<boolean>(false);
   return (
     <AppStateContext.Provider
       value={{
@@ -26,6 +29,8 @@ function AppStateProvider({ children }) {
         setVenuesErrorState,
         teams,
         setTeams,
+        teamsErrorState,
+        setTeamsErrorState,
       }}>
       {children}
     </AppStateContext.Provider>
