@@ -12,6 +12,7 @@ import * as eva from "@eva-design/eva";
 import { ApplicationProvider } from "@ui-kitten/components";
 
 import { moralis } from "./configs/configs";
+import { AppStateProvider } from "./providers/AppStateProvider";
 import { CustomMoralisProvider } from "./providers/CustomMoralisProvider";
 import { MoralisDappProvider } from "./providers/MoralisDappProvider";
 
@@ -60,7 +61,9 @@ export const Providers = ({ children }: ProvidersProps) => {
         environment={environment}>
         <MoralisDappProvider>
           <ApplicationProvider {...eva} theme={eva.light}>
-            <CustomMoralisProvider>{children}</CustomMoralisProvider>
+            <AppStateProvider>
+              <CustomMoralisProvider>{children}</CustomMoralisProvider>
+            </AppStateProvider>
           </ApplicationProvider>
         </MoralisDappProvider>
       </MoralisProvider>
