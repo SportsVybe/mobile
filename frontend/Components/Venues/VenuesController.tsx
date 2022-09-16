@@ -1,41 +1,25 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { getAllVenues, searchVenues } from "../../api/aws";
-import { Venue } from "../../configs/types";
+import { getAllVenues } from "../../api/aws";
+import { useAppState } from "../../providers/AppStateProvider";
 import VenuesView from "./VenuesView";
-// import VenuesFilter from "./VenuesFilter";
-// import VenuesView from "./VenuesView";
 
 export const VenuesController = () => {
-  const [venues, setVenues] = useState<Venue[] | undefined>([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isSearching, setIsSearching] = useState(false);
-  const [error, setError] = useState<boolean>(false);
+  const { venues, setVenues, venuesError, setVenuesError } = useAppState();
+  const [isLoading, setIsLoading] = React.useState(true);
 
   const fetchVenues = async () => {
     setIsLoading(true);
     try {
-      const data = await getAllVenues();
-      if (!data || !data.statusCode) return [];
-      if (data.statusCode === 200) return data.data;
-      if (data.statusCode === 404) return [];
-      if (data.statusCode === 500) setError(true);
+      const response = await getAllVenues();
+      if (!response || !response.statusCode) return [];
+      if (response.statusCode === 200) return response.data;
+      if (response.statusCode === 404) return [];
+      if (response.statusCode === 500) setVenuesError(true);
       return [];
     } catch (error) {
-      console.log(error);
+      console.error(`Error fetching venues: ${error.toString()}`);
     }
-  };
-
-  const fetchSearchVenues = async (
-    attribute: string,
-    value: string | number,
-  ) => {
-    setIsSearching(true);
-    const data = await searchVenues({ attribute, value });
-    if (!data || !data.statusCode) return [];
-    setVenues(data.data);
-    setIsSearching(false);
-    return data.data;
   };
 
   useEffect(() => {
@@ -44,23 +28,19 @@ export const VenuesController = () => {
       .then(() => setIsLoading(false))
       .catch(error => {
         setIsLoading(false);
-        setError(true);
+        setVenuesError(true);
       });
   }, []);
 
+  console.log("venuesController", venues);
   return venues && !isLoading ? (
     <View style={styles.container}>
-      {/* <VenuesFilter
-        fetchSearchVenues={fetchSearchVenues}
-        isSearching={isSearching}
-        setIsSearching={setIsSearching}
-      /> */}
       <VenuesView venues={venues} isLoading={isLoading} />
     </View>
   ) : (
     <View>
       <Text>
-        {!error
+        {!venuesError
           ? "Loading...."
           : "Error! Please try another search or refresh the page"}
       </Text>

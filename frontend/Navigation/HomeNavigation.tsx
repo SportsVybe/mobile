@@ -14,7 +14,7 @@ import useNotifications from "../api/Moralis/useNotifications";
 import NotificationsNavigation from "./NotificationsNavigation";
 import ProfileNavigation from "./ProfileNavigation";
 import TeamsNavigation from "./TeamsNavigation";
-import VenuesNavigation from "./VenuesNavigation";
+import MainVenuesNavigation from "./VenuesNavigation";
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -24,7 +24,7 @@ function HomeNavigation(): JSX.Element {
     availableRewards,
     pendingInvites,
     activeChallenges,
-  } = useNotifications({ username: user && user.get("username") });
+  } = useNotifications();
 
   const totalNotifications =
     availableRewards + pendingInvites + activeChallenges;
@@ -35,7 +35,7 @@ function HomeNavigation(): JSX.Element {
       activeColor="#315399"
       barStyle={{ backgroundColor: "white" }}>
       <Tab.Screen
-        name="VenuesNavigation"
+        name="MainVenuesNavigation"
         options={{
           tabBarLabel: "Venues",
           tabBarIcon: ({ color, focused }) => {
@@ -44,7 +44,7 @@ function HomeNavigation(): JSX.Element {
             );
           },
         }}
-        component={VenuesNavigation}
+        component={MainVenuesNavigation}
       />
       <Tab.Screen
         name="TeamsNavigation"

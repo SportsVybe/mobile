@@ -1,6 +1,14 @@
+import { faFilter } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { VenuesController } from "../../Components/Venues/VenuesController";
 
 function VenuesScreen() {
@@ -9,7 +17,12 @@ function VenuesScreen() {
   return (
     <ScrollView>
       <View style={styles.container}>
-        <Text style={styles.title}>Venues</Text>
+        <View style={styles.headerRow}>
+          <Text style={styles.title}>Venues</Text>
+          <TouchableOpacity onPress={() => navigation.navigate("VenuesFilter")}>
+            <FontAwesomeIcon icon={faFilter} size={20} />
+          </TouchableOpacity>
+        </View>
         <VenuesController />
       </View>
     </ScrollView>
@@ -30,5 +43,11 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginTop: 10,
     marginBottom: 10,
+  },
+  headerRow: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: "center",
+    width: "100%",
   },
 });

@@ -16,8 +16,10 @@ export const getAllVenues = async (): Promise<GetAllVenuesResponse> => {
 };
 
 export const searchVenues = async (
-  params: VenueSearchParams
+  params: VenueSearchParams,
 ): Promise<GetAllVenuesResponse> => {
+  console.log("searchVenues", params);
+
   const apiName = "web3api";
   const path = "/venues/search";
   const myInit = {
@@ -72,7 +74,7 @@ export const deleteVenue = async (id: string): Promise<Venue> => {
 };
 
 export const getAllVenuesByActivity = async (
-  activity: string
+  activity: string,
 ): Promise<Venue[]> => {
   const apiName = "web3api";
   const path = `/venues`;

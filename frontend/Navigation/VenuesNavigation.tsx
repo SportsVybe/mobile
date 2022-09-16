@@ -1,46 +1,46 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import React from "react";
-import { useMoralis } from "react-moralis";
-import { useWalletConnect } from "../WalletConnect";
 
 import Header from "../Components/Header";
+import VenuesFilterView from "../Components/Venues/VenuesFilterView";
 import VenueScreen from "../Screens/Venues/VenueScreen";
 import VenuesScreen from "../Screens/Venues/VenuesScreen";
 
 const Stack = createStackNavigator();
 
-function VenuesNavigation(): JSX.Element {
-  const connector = useWalletConnect();
-  const {
-    authenticate,
-    authError,
-    isAuthenticating,
-    isAuthenticated,
-    logout,
-    Moralis,
-  } = useMoralis();
-
+function MainVenuesNavigation(): JSX.Element {
   return (
-    <Stack.Navigator initialRouteName="VenuesScreen">
-      {/* Auth Navigator: Include Login and Signup */}
+    <Stack.Navigator initialRouteName="VenuesNavigation">
+      <Stack.Screen
+        name="VenuesNavigation"
+        component={VenuesNavigation}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen name="VenueScreen" component={VenueScreen} />
+    </Stack.Navigator>
+  );
+}
+
+function VenuesNavigation(): JSX.Element {
+  return (
+    <Stack.Navigator
+      initialRouteName="VenuesScreen"
+      screenOptions={{
+        presentation: "modal",
+        gestureEnabled: true,
+      }}>
       <Stack.Screen
         name="VenuesScreen"
         component={VenuesScreen}
-        options={{ headerTitle: props => <Header /> }}
+        options={{ headerTitle: props => <Header />, title: "Venues" }}
       />
-      {/* Navigation Drawer as a landing page */}
       <Stack.Screen
-        name="VenueScreen"
-        component={VenueScreen}
-        // Hiding header for Navigation Drawer
-
-        // options={{ headerTitle: props => <Header /> }}
-        // options={({ route }) => ({
-        //   headerTitle: getHeaderTitle(route),
-        // })}
+        name="VenuesFilter"
+        component={VenuesFilterView}
+        options={{ title: "Venues Filter" }}
       />
     </Stack.Navigator>
   );
 }
 
-export default VenuesNavigation;
+export default MainVenuesNavigation;
