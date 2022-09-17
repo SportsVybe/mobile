@@ -35,8 +35,10 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>All SportsVybe to access your location to provide accurate venues, teams, and event details</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string>All SportsVybe to access your location to provide accurate venues, teams, and event details</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>AntDesign.ttf</string>
