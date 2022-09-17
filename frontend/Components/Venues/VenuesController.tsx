@@ -11,7 +11,7 @@ export const VenuesController = () => {
     venuesErrorState,
     setVenuesErrorState,
   } = useAppState();
-  const [isLoading, setIsLoading] = React.useState(true);
+  const [isLoading, setIsLoading] = React.useState(false);
 
   const fetchVenues = async () => {
     setIsLoading(true);
@@ -28,13 +28,13 @@ export const VenuesController = () => {
   };
 
   useEffect(() => {
-    //   fetchVenues()
-    //     .then(setVenues)
-    //     .then(() => setIsLoading(false))
-    //     .catch(error => {
-    //       setIsLoading(false);
-    //       setVenuesErrorState(true);
-    //     });
+    fetchVenues()
+      .then(setVenues)
+      .then(() => setIsLoading(false))
+      .catch(error => {
+        setIsLoading(false);
+        setVenuesErrorState(true);
+      });
   }, []);
 
   return venues && !isLoading ? (

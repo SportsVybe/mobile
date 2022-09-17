@@ -1,4 +1,5 @@
 import { Picker } from "@react-native-community/picker";
+import Slider from "@react-native-community/slider";
 import React, { Suspense, useState } from "react";
 import {
   Modal,
@@ -10,15 +11,23 @@ import {
 } from "react-native";
 import { searchVenues } from "../../api/aws";
 import { sports } from "../../configs/constants";
+import { Venue } from "../../configs/types";
 import { capitalizeWord } from "../../helpers/formatters";
 import { useAppState } from "../../providers/AppStateProvider";
 
 export default function VenuesFilterView({ navigation }) {
-  const [value, setValue] = useState<string | number>("featured");
   const selectMenu = ["featured", ...sports];
   const [isSearching, setIsSearching] = useState(false);
-  const { setVenues, setVenuesErrorState } = useAppState();
-  const [modalVisible, setModalVisible] = useState(false);
+  const {
+    setVenues,
+    setVenuesErrorState,
+    venueFilters,
+    setVenueFilters,
+  } = useAppState();
+  const [sportModalVisible, setSportModalVisible] = useState(false);
+  const [distanceModalVisible, setDistantModalVisible] = useState(false);
+  const [sortModalVisible, setSortModalVisible] = useState(false);
+
   const fetchSearchVenues = async (
     attribute: string,
     value: string | number,
@@ -37,18 +46,29 @@ export default function VenuesFilterView({ navigation }) {
     }
   };
 
+  const sortVenues = (venues: Venue[]): Venue[] => {
+    // if (venueFilters.sort === "distance") {
+    //   return venues.sort((a, b) => a.distance - b.distance);
+    // }
+    if (venueFilters.sort === "name") {
+      return venues.sort((a, b) => a.name.localeCompare(b.name));
+    }
+    return venues;
+  };
+
   const applySearch = () => {
     let searchValue: string | number;
     let searchAttribute: string;
-    if (value === "featured") {
+    if (venueFilters.sport === "featured") {
       searchValue = 4;
       searchAttribute = "status";
     } else {
-      searchValue = value;
+      searchValue = venueFilters.sport;
       searchAttribute = "availableActivities";
     }
 
     fetchSearchVenues(searchAttribute, searchValue)
+      .then(sortVenues)
       .then(setVenues)
       .then(() => setIsSearching(false))
       .then(() => navigation.navigate("VenuesScreen"))
@@ -64,20 +84,36 @@ export default function VenuesFilterView({ navigation }) {
         <View style={styles.container}>
           <View style={styles.filterContainer}>
             <View style={styles.filterRow}>
-              <Text style={styles.pickerTitle}>Attribute:</Text>
-              <TouchableOpacity style={styles.pickedValue}>
-                <Text style={styles.pickerText}>Sport</Text>
+              <Text style={styles.filterTitle}>Sport:</Text>
+              <TouchableOpacity
+                style={styles.filterValue}
+                onPress={() => setSportModalVisible(true)}>
+                <Text style={styles.filterValueText}>
+                  {capitalizeWord(venueFilters.sport.toString())}
+                </Text>
               </TouchableOpacity>
             </View>
           </View>
           <View style={styles.filterContainer}>
             <View style={styles.filterRow}>
-              <Text style={styles.pickerTitle}>Value:</Text>
+              <Text style={styles.filterTitle}>Distance:</Text>
               <TouchableOpacity
-                style={styles.pickedValue}
-                onPress={() => setModalVisible(true)}>
-                <Text style={styles.pickerText}>
-                  {capitalizeWord(value.toString())}
+                style={styles.filterValue}
+                onPress={() => setDistantModalVisible(true)}>
+                <Text style={styles.filterValueText}>
+                  {venueFilters.distance} miles
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+          <View style={styles.filterContainer}>
+            <View style={styles.filterRow}>
+              <Text style={styles.filterTitle}>Sort:</Text>
+              <TouchableOpacity
+                style={styles.filterValue}
+                onPress={() => setSortModalVisible(true)}>
+                <Text style={styles.filterValueText}>
+                  By {venueFilters.sort}
                 </Text>
               </TouchableOpacity>
             </View>
@@ -100,14 +136,15 @@ export default function VenuesFilterView({ navigation }) {
           animationType="slide"
           transparent={true}
           style={styles.modalContainer}
-          visible={modalVisible}>
+          visible={sportModalVisible}>
           <View style={styles.filterCol}>
+            <Text style={styles.modalTitle}>Sport:</Text>
             <Picker
-              selectedValue={value}
+              selectedValue={venueFilters.sport}
               mode="dropdown"
               style={styles.picker}
               onValueChange={(itemValue: string, itemIndex) => {
-                setValue(itemValue);
+                setVenueFilters({ ...venueFilters, sport: itemValue });
               }}>
               {selectMenu.map((item, i) => (
                 <Picker.Item
@@ -120,9 +157,63 @@ export default function VenuesFilterView({ navigation }) {
             <TouchableOpacity
               style={styles.applyButton}
               onPress={() => {
-                setModalVisible(false);
+                setSportModalVisible(false);
               }}>
-              <Text style={styles.buttonText}>Select</Text>
+              <Text style={styles.buttonText}>Set</Text>
+            </TouchableOpacity>
+          </View>
+        </Modal>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          style={styles.modalContainer}
+          visible={distanceModalVisible}>
+          <View style={styles.filterCol}>
+            <Text style={styles.modalTitle}>Distance:</Text>
+            <Slider
+              style={styles.slider}
+              minimumValue={0}
+              maximumValue={100}
+              step={5}
+              minimumTrackTintColor="#000000"
+              maximumTrackTintColor="#000000"
+              thumbTintColor="#FFFFFF"
+              onValueChange={value => {
+                setVenueFilters({ ...venueFilters, distance: value });
+              }}
+            />
+            <TouchableOpacity
+              style={styles.applyButton}
+              onPress={() => {
+                setDistantModalVisible(false);
+              }}>
+              <Text style={styles.buttonText}>Set</Text>
+            </TouchableOpacity>
+          </View>
+        </Modal>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          style={styles.modalContainer}
+          visible={sortModalVisible}>
+          <View style={styles.filterCol}>
+            <Text style={styles.modalTitle}>Sort:</Text>
+            <Picker
+              selectedValue={venueFilters.sort}
+              mode="dropdown"
+              style={styles.picker}
+              onValueChange={(itemValue: string, itemIndex) => {
+                setVenueFilters({ ...venueFilters, sort: itemValue });
+              }}>
+              <Picker.Item label="By distance" value="distance" />
+              <Picker.Item label="By name" value="name" />
+            </Picker>
+            <TouchableOpacity
+              style={styles.applyButton}
+              onPress={() => {
+                setSortModalVisible(false);
+              }}>
+              <Text style={styles.buttonText}>Set</Text>
             </TouchableOpacity>
           </View>
         </Modal>
@@ -141,24 +232,7 @@ const styles = StyleSheet.create({
   },
   modalContainer: {
     width: "400px",
-    marginTop: "auto",
-    flex: 0.5,
-    justifyContent: "flex-end",
-    alignItems: "center",
     backgroundColor: "white",
-  },
-  filterRow: {
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-    width: "100%",
-  },
-  filterCol: {
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: "auto",
-    backgroundColor: "#fff",
-    flex: 0.4,
   },
   filterContainer: {
     flexDirection: "column",
@@ -176,17 +250,27 @@ const styles = StyleSheet.create({
     shadowRadius: 3.84,
     elevation: 5,
   },
-  picker: {
-    height: 200,
-    width: 250,
-    margin: 10,
+  filterRow: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%",
   },
-  pickerTitle: {
+  filterCol: {
+    alignItems: "center",
+    flexDirection: "column",
+    justifyContent: "flex-start",
+    marginTop: "auto",
+    backgroundColor: "#fff",
+    height: 300,
+  },
+  filterTitle: {
     fontSize: 20,
     fontWeight: "bold",
     marginRight: 10,
+    width: 100,
   },
-  pickedValue: {
+  filterValue: {
     backgroundColor: "#fff",
     borderRadius: 10,
     padding: 10,
@@ -197,8 +281,21 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  pickerText: {
+  filterValueText: {
     fontSize: 20,
+  },
+  modalTitle: {
+    fontSize: 20,
+    fontWeight: "bold",
+    marginTop: 20,
+  },
+  slider: {
+    width: 250,
+    height: 80,
+  },
+  picker: {
+    height: 150,
+    width: 250,
   },
   applyButton: {
     backgroundColor: "#315399",

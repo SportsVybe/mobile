@@ -10,6 +10,12 @@ const defaultState = {
   setTeams: (teams: Team[]) => {},
   teamsErrorState: false,
   setTeamsErrorState: (errorState: boolean) => {},
+  venueFilters: {
+    sport: "featured",
+    distance: 5,
+    sort: "distance",
+  },
+  setVenueFilters: (filters: object) => {},
 };
 
 const AppStateContext = createContext(defaultState);
@@ -18,8 +24,13 @@ function AppStateProvider({ children }) {
   const [venues, setVenues] = useState<Venue[]>();
   const [venuesErrorState, setVenuesErrorState] = useState<boolean>(false);
   const [teams, setTeams] = useState<Team[]>();
-
   const [teamsErrorState, setTeamsErrorState] = useState<boolean>(false);
+  const [venueFilters, setVenueFilters] = useState<any>({
+    sport: "featured",
+    distance: 5,
+    sort: "distance",
+  });
+
   return (
     <AppStateContext.Provider
       value={{
@@ -31,6 +42,8 @@ function AppStateProvider({ children }) {
         setTeams,
         teamsErrorState,
         setTeamsErrorState,
+        venueFilters,
+        setVenueFilters,
       }}>
       {children}
     </AppStateContext.Provider>

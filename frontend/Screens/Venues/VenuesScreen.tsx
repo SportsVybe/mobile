@@ -42,12 +42,13 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
     marginTop: 10,
-    marginBottom: 10,
+    marginBottom: 5,
   },
   headerRow: {
     flexDirection: "row",
     justifyContent: "space-around",
     alignItems: "center",
     width: "100%",
+    marginTop: 10,
   },
 });
