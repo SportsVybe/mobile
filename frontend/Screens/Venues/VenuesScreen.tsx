@@ -17,12 +17,12 @@ function VenuesScreen() {
   return (
     <ScrollView>
       <View style={styles.container}>
-        <View style={styles.headerRow}>
-          <Text style={styles.title}>Venues</Text>
-          <TouchableOpacity onPress={() => navigation.navigate("VenuesFilter")}>
+        <TouchableOpacity onPress={() => navigation.navigate("VenuesFilter")}>
+          <View style={styles.headerRow}>
+            <Text style={styles.title}>Venues</Text>
             <FontAwesomeIcon icon={faFilter} size={20} />
-          </TouchableOpacity>
-        </View>
+          </View>
+        </TouchableOpacity>
         <VenuesController />
       </View>
     </ScrollView>
@@ -41,14 +41,17 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: "bold",
-    marginTop: 10,
     marginBottom: 5,
+    marginRight: 10,
   },
   headerRow: {
     flexDirection: "row",
     justifyContent: "space-around",
     alignItems: "center",
-    width: "100%",
-    marginTop: 10,
+    width: "90%",
+    maxWidth: 350,
+    borderBottomColor: "grey",
+    borderBottomWidth: 1,
+    padding: 10,
   },
 });

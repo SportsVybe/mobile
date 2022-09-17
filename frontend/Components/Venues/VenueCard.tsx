@@ -32,7 +32,7 @@ export const VenueCard = ({ venue }: Props) => {
             venue.availableActivities.map((activity: string, i: number) => {
               return (
                 <Text style={styles.activityText} key={i}>
-                  +{capitalizeWords(activity)} |{" "}
+                  {capitalizeWords(activity)} |{" "}
                 </Text>
               );
             })}
@@ -48,13 +48,14 @@ export const VenueCard = ({ venue }: Props) => {
           <Text style={styles.buttonText}>Check In</Text>
         </TouchableOpacity>
       </View>
+      <View style={styles.horizontalRule}></View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   venueCard: {
-    width: "90%",
+    width: "95%",
     maxWidth: 350,
     height: "auto",
     backgroundColor: "#fff",
@@ -62,13 +63,8 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
-    margin: 10,
+    marginHorizontal: 10,
     padding: 10,
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: "bold",
-    marginBottom: 20,
   },
   activityText: {
     fontSize: 13,
@@ -109,7 +105,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   venueName: {
-    fontSize: 18,
+    fontSize: 19,
     fontWeight: "bold",
     marginBottom: 10,
   },
@@ -129,5 +125,11 @@ const styles = StyleSheet.create({
   buttonText: {
     color: "#fff",
     fontSize: 16,
+  },
+  horizontalRule: {
+    borderBottomColor: "grey",
+    borderBottomWidth: 1,
+    width: "100%",
+    marginTop: 15,
   },
 });

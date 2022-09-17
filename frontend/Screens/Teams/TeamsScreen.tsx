@@ -1,34 +1,27 @@
 // new screen
 
+import { faFilter } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { TeamsController } from "../../Components/Teams/TeamsController";
 
-export const teamsData = [
-  {
-    name: "Team Name 1",
-    pos: "100",
-    record: "1-1-1",
-    sports: ["basketball", "soccer", "football"],
-    id: "1",
-  },
-  {
-    name: "Team Name 2",
-    pos: "200",
-    record: "2-2-2",
-    sports: ["tennis", "baseball", "volleyball"],
-    id: "2",
-  },
-];
 function TeamsScreen() {
   const navigation = useNavigation();
 
   return (
     <ScrollView>
       <View style={styles.container}>
-        <Text style={styles.title}>Teams</Text>
+        <TouchableOpacity
+        // onPress={() => navigation.navigate("TeamsFilter")}
+        >
+          <View style={styles.headerRow}>
+            <Text style={styles.title}>Teams</Text>
+            <FontAwesomeIcon icon={faFilter} size={20} />
+          </View>
+        </TouchableOpacity>
         <TeamsController />
       </View>
     </ScrollView>
@@ -47,47 +40,17 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: "bold",
-    marginBottom: 20,
+    marginBottom: 5,
+    marginRight: 10,
   },
-  teamCard: {
-    width: "100%",
+  headerRow: {
+    flexDirection: "row",
+    justifyContent: "space-around",
     alignItems: "center",
-    justifyContent: "center",
-    marginBottom: 20,
-  },
-  image: {
-    width: 300,
-    height: 200,
-    marginBottom: 10,
-  },
-  teamName: {
-    fontSize: 18,
-    fontWeight: "bold",
-    marginBottom: 10,
-  },
-  teamPOS: {
-    fontSize: 16,
-    marginBottom: 10,
-  },
-  teamRecord: {
-    fontSize: 16,
-    marginBottom: 10,
-  },
-  teamSports: {
-    fontSize: 16,
-    marginBottom: 10,
-  },
-  button: {
-    backgroundColor: "#315399",
+    width: "90%",
+    maxWidth: 350,
+    borderBottomColor: "grey",
+    borderBottomWidth: 1,
     padding: 10,
-    borderRadius: 5,
-    width: 200,
-    alignItems: "center",
-    justifyContent: "center",
-    marginTop: 10,
-  },
-  buttonText: {
-    color: "#fff",
-    fontSize: 16,
   },
 });

@@ -55,15 +55,14 @@ export const TeamCard = ({ team }: Props) => {
         </View>
         <View style={styles.teamCardText}>
           <Text style={styles.teamCardTitle}>Sports Preferences:</Text>
-          <Text style={{ flexWrap: "wrap" }}>
+          <Text style={styles.sportPreferences}>
             {team.get("teamSportsPreferences") &&
               team
                 .get("teamSportsPreferences")
-                .map((sport: string, i: number) => {
+                .map((activity: string, i: number) => {
                   return (
-                    <Text key={i}>
-                      {capitalizeWord(sport)}
-                      {"\n"}
+                    <Text style={styles.activityText} key={i}>
+                      {capitalizeWord(activity)} |{" "}
                     </Text>
                   );
                 })}
@@ -79,30 +78,23 @@ export const TeamCard = ({ team }: Props) => {
           </Text>
         </TouchableOpacity>
       </View>
+      <View style={styles.horizontalRule}></View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: "bold",
-    marginBottom: 20,
-  },
   teamCard: {
-    width: "90%",
-    alignItems: "center",
-    justifyContent: "center",
-    marginBottom: 20,
-    borderColor: "black",
-    borderWidth: 1,
+    width: "95%",
+    maxWidth: 350,
+    height: "auto",
+    backgroundColor: "#fff",
     borderRadius: 10,
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    marginHorizontal: 10,
+    padding: 10,
   },
   teamCardRowTop: {
     flexDirection: "row",
@@ -119,6 +111,8 @@ const styles = StyleSheet.create({
     height: 100,
     marginRight: 30,
     padding: 10,
+    alignItems: "center",
+    justifyContent: "center",
   },
   teamCardTitle: {
     fontSize: 16,
@@ -131,7 +125,7 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   teamName: {
-    fontSize: 18,
+    fontSize: 19,
     fontWeight: "bold",
     marginBottom: 10,
   },
@@ -159,10 +153,25 @@ const styles = StyleSheet.create({
     width: 200,
     alignItems: "center",
     justifyContent: "center",
-    margin: 10,
+    marginTop: 10,
   },
   buttonText: {
     color: "#fff",
     fontSize: 16,
+  },
+  sportPreferences: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "flex-start",
+    alignItems: "center",
+  },
+  horizontalRule: {
+    borderBottomColor: "grey",
+    borderBottomWidth: 1,
+    width: "100%",
+    marginTop: 15,
+  },
+  activityText: {
+    fontSize: 13,
   },
 });
