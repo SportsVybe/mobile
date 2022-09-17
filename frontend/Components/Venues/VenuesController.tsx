@@ -10,6 +10,7 @@ export const VenuesController = () => {
     setVenues,
     venuesErrorState,
     setVenuesErrorState,
+    userLocation,
   } = useAppState();
   const [isLoading, setIsLoading] = React.useState(false);
 

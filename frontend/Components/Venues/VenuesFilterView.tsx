@@ -12,6 +12,7 @@ import {
 import { searchVenues } from "../../api/aws";
 import { sports } from "../../configs/constants";
 import { Venue } from "../../configs/types";
+import { calcDistance } from "../../helpers/calcDistance";
 import { capitalizeWord } from "../../helpers/formatters";
 import { useAppState } from "../../providers/AppStateProvider";
 
@@ -23,6 +24,7 @@ export default function VenuesFilterView({ navigation }) {
     setVenuesErrorState,
     venueFilters,
     setVenueFilters,
+    userLocation,
   } = useAppState();
   const [sportModalVisible, setSportModalVisible] = useState(false);
   const [distanceModalVisible, setDistantModalVisible] = useState(false);
@@ -46,10 +48,29 @@ export default function VenuesFilterView({ navigation }) {
     }
   };
 
+  const getDistance = (venue: Venue) => {
+    return calcDistance(
+      userLocation.lat,
+      userLocation.lng,
+      venue.coordinates.latitude,
+      venue.coordinates.longitude,
+      "M",
+    );
+  };
+
+  const limitByDistance = (venues: Venue[]): Venue[] => {
+    const venuesWithDistance = venues.map(venue => {
+      return { ...venue, distance: getDistance(venue) };
+    });
+    return venuesWithDistance.filter(
+      venue => venue.distance <= venueFilters.distance,
+    );
+  };
+
   const sortVenues = (venues: Venue[]): Venue[] => {
-    // if (venueFilters.sort === "distance") {
-    //   return venues.sort((a, b) => a.distance - b.distance);
-    // }
+    if (venueFilters.sort === "distance") {
+      return venues.sort((a, b) => Number(a.distance) - Number(b.distance));
+    }
     if (venueFilters.sort === "name") {
       return venues.sort((a, b) => a.name.localeCompare(b.name));
     }
@@ -68,6 +89,7 @@ export default function VenuesFilterView({ navigation }) {
     }
 
     fetchSearchVenues(searchAttribute, searchValue)
+      .then(limitByDistance)
       .then(sortVenues)
       .then(setVenues)
       .then(() => setIsSearching(false))
@@ -173,8 +195,9 @@ export default function VenuesFilterView({ navigation }) {
             <Slider
               style={styles.slider}
               minimumValue={0}
-              maximumValue={100}
+              maximumValue={3000}
               step={5}
+              value={venueFilters.distance}
               minimumTrackTintColor="#000000"
               maximumTrackTintColor="#000000"
               thumbTintColor="#FFFFFF"

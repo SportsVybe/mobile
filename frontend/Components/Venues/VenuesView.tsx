@@ -17,7 +17,11 @@ export default function VenuesView({ venues, isLoading }: Props) {
             return <VenueCard venue={venue} key={venue.id} />;
           })
         ) : (
-          <Text>No venues found. Try another search</Text>
+          <View style={styles.notFoundView}>
+            <Text style={styles.notFoundText}>
+              No venues found. Try another search
+            </Text>
+          </View>
         )}
       </View>
     </Suspense>
@@ -30,5 +34,28 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     width: "100%",
+    flex: 1,
+  },
+  notFoundView: {
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%",
+    height: 500,
+    backgroundColor: "#fff",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  notFoundText: {
+    fontSize: 20,
+    fontWeight: "bold",
+    marginRight: 10,
+    maxWidth: 350,
   },
 });

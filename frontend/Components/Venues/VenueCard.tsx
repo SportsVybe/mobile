@@ -2,13 +2,16 @@
 import React from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { Venue } from "../../configs/types";
+import { calcDistance } from "../../helpers/calcDistance";
 import { capitalizeWords, formatAddress } from "../../helpers/formatters";
+import { useAppState } from "../../providers/AppStateProvider";
 
 type Props = {
   venue: Venue;
 };
 
 export const VenueCard = ({ venue }: Props) => {
+  const { userLocation } = useAppState();
   return (
     <View style={styles.venueCard}>
       <View>
@@ -24,6 +27,19 @@ export const VenueCard = ({ venue }: Props) => {
           />
         </View>
         <Text style={styles.venueName}>{capitalizeWords(venue.name)}</Text>
+
+        <Text style={styles.titleText}>Distance away:</Text>
+        <Text style={styles.venueAddress}>
+          {`${
+            calcDistance(
+              userLocation.lat,
+              userLocation.lng,
+              venue.coordinates.latitude,
+              venue.coordinates.longitude,
+              "M",
+            ) || 0
+          } Miles`}
+        </Text>
         <Text style={styles.titleText}>Address:</Text>
         <Text style={styles.venueAddress}>{formatAddress(venue.address)}</Text>
         <Text style={styles.titleText}>Activities:</Text>
