@@ -5,6 +5,7 @@ import {
   REACT_APP_MORALIS_SERVER_URL,
   REACT_APP_TOKEN_CONTRACT_ADDRESS,
 } from "@env";
+import { GeolocationConfiguration } from "@react-native-community/geolocation";
 import abi from "./abi.json";
 import vtoken from "./vtoken.json";
 
@@ -19,4 +20,10 @@ export const contract = {
   tokenContractABI: vtoken.abi,
   contractAddress: REACT_APP_CONTRACT_ADDRESS,
   tokenContractAddress: REACT_APP_TOKEN_CONTRACT_ADDRESS,
+};
+
+export const geoConfig: GeolocationConfiguration = {
+  skipPermissionRequests: false,
+  authorizationLevel: "auto",
+  locationProvider: "auto",
 };

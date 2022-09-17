@@ -205,6 +205,7 @@ export interface Venue {
   photo: string;
   claimedBy?: string;
   dadeParkObjectId?: string | number;
+  distance?: string | number;
   status: number; // status: 0 - inactive, 1 - active, 2 - pending, 3 - deleted, 4 - featured, 5 - claimed
 }
 
