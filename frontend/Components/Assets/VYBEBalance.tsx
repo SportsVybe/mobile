@@ -1,6 +1,6 @@
 import React, { Suspense } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { contract } from "../../configs/configs";
+import { contractConfig } from "../../configs/configs";
 import useERC20Balance from "../../hooks/useERC20balance";
 import { useMoralisDapp } from "../../providers/MoralisDappProvider";
 
@@ -19,7 +19,8 @@ function VYBEBalance({ header = false }): JSX.Element {
     assets &&
     assets.find(
       asset =>
-        asset.token_address == contract.tokenContractAddress.toLowerCase(),
+        asset.token_address ==
+        contractConfig.tokenContractAddress.toLowerCase(),
     );
 
   const tokenBalanceValue =

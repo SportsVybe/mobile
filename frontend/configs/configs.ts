@@ -15,7 +15,7 @@ export const moralis = {
   MORALIS_API_KEY: REACT_APP_MORALIS_API_KEY,
 };
 
-export const contract = {
+export const contractConfig = {
   contractABI: abi.abi,
   tokenContractABI: vtoken.abi,
   contractAddress: REACT_APP_CONTRACT_ADDRESS,
