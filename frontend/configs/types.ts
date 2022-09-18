@@ -51,7 +51,7 @@ export type Challenge = {
   challengeChainId: string;
   challengeAmount: number;
   challengeMessage: string;
-  challengeSport: string[];
+  challengeSport: string;
   actionId: Action;
   challengeTeam1: Team | Moralis.Object<Moralis.Attributes> | null;
   challengeTeam2: Team | Moralis.Object<Moralis.Attributes> | null;

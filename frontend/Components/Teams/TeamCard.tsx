@@ -5,6 +5,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useMoralis } from "react-moralis";
 import { Team } from "../../configs/types";
 import { capitalizeWord } from "../../helpers/formatters";
+import ManageChallenge from "../Modals/ManageChallenge";
 import { Photo } from "../Photo";
 
 type Props = {
@@ -70,15 +71,37 @@ export const TeamCard = ({ team }: Props) => {
         </View>
       </View>
       <View style={styles.buttonRow}>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => alert("Challenge or Manage")}>
-          <Text style={styles.buttonText}>
-            {isAdmin ? "Manage" : "Challenge"}
-          </Text>
-        </TouchableOpacity>
+        {isAdmin ? (
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => alert("Manage")}>
+            <Text style={styles.buttonText}>Manage</Text>
+          </TouchableOpacity>
+        ) : (
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => toggleManageChallengeModal(true)}>
+            <Text style={styles.buttonText}>Challenge</Text>
+          </TouchableOpacity>
+        )}
       </View>
       <View style={styles.horizontalRule}></View>
+      {/* {user && isAdmin && (
+        <ManageTeam
+          user={user}
+          team={team}
+          toggleModal={toggleManageTeamModal}
+          modalView={manageTeamModal}
+        />
+      )} */}
+      {user && !isTeamMember && (
+        <ManageChallenge
+          challengeTeam={team}
+          createNewChallenge={true}
+          toggleModal={toggleManageChallengeModal}
+          modalView={manageChallengeModal}
+        />
+      )}
     </View>
   );
 };
