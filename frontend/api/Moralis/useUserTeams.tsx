@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useMoralis } from "react-moralis";
-import { GetUserTeamsResponse, Team } from "../../configs/types";
+import { GetUserTeamsResponse } from "../../configs/types";
 import { useCustomMoralis } from "../../providers/CustomMoralisProvider";
 
 type Props = {
@@ -9,11 +9,12 @@ type Props = {
 
 const useUserTeams = ({ username }: Props) => {
   const { isInitialized } = useMoralis();
-  const { getAllPossibleObjects } = useCustomMoralis();
-  const [userTeams, setUserTeams] = useState<Team[] | any>();
+  const { cloudFunction } = useCustomMoralis();
+  const [userTeams, setUserTeams] = useState<GetUserTeamsResponse>();
 
-  const fetchTeams = async (): Promise<GetUserTeamsResponse | any[]> => {
-    return await getAllPossibleObjects("teams", "teamMembers", username);
+  const fetchTeams = async (): Promise<GetUserTeamsResponse> => {
+    const results = await cloudFunction("getUserTeams", {});
+    return results;
   };
 
   useEffect(() => {

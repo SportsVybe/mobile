@@ -58,7 +58,7 @@ export const ProfileController = ({ user, isCurrentUser = false }: Props) => {
       <ProfileView
         userData={userData && userData.user}
         isCurrentUser={isCurrentUser}
-        teams={userTeams}
+        teams={userTeams && userTeams.teamOwnerTeams}
         isLoading={isLoading}
         userObject={userData && userData.user}
         rewards={availableRewards}
