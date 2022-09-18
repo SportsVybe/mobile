@@ -22,6 +22,15 @@ const defaultState = {
     sort: "distance",
   },
   setVenueFilters: (filters: object) => {},
+  teamsFilters: {
+    sport: "all",
+    minPOS: 100,
+    wins: 0,
+    losses: 0,
+    ties: 0,
+    sort: "pos",
+  },
+  setTeamsFilters: (filters: object) => {},
 };
 
 const AppStateContext = createContext(defaultState);
@@ -32,12 +41,14 @@ function AppStateProvider({ children }) {
   const [venuesErrorState, setVenuesErrorState] = useState<boolean>(false);
   const [teams, setTeams] = useState<Team[]>();
   const [teamsErrorState, setTeamsErrorState] = useState<boolean>(false);
-  const [teamsFilters, setTeamsFilters] = useState<object>({
-    sport: "featured",
-    posRange: [0, 100],
+
+  const [teamsFilters, setTeamsFilters] = useState<any>({
+    sport: "all",
+    minPOS: 100,
     wins: 0,
     losses: 0,
     ties: 0,
+    sort: "pos",
   });
   const [venueFilters, setVenueFilters] = useState<any>({
     sport: "featured",
@@ -82,6 +93,8 @@ function AppStateProvider({ children }) {
         setVenuesErrorState,
         teams,
         setTeams,
+        teamsFilters,
+        setTeamsFilters,
         teamsErrorState,
         setTeamsErrorState,
         venueFilters,

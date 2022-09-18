@@ -13,7 +13,7 @@ import { useMoralis } from "react-moralis";
 import useNotifications from "../api/Moralis/useNotifications";
 import NotificationsNavigation from "./NotificationsNavigation";
 import ProfileNavigation from "./ProfileNavigation";
-import TeamsNavigation from "./TeamsNavigation";
+import MainTeamsNavigation from "./TeamsNavigation";
 import MainVenuesNavigation from "./VenuesNavigation";
 
 const Tab = createMaterialBottomTabNavigator();
@@ -47,14 +47,14 @@ function HomeNavigation(): JSX.Element {
         component={MainVenuesNavigation}
       />
       <Tab.Screen
-        name="TeamsNavigation"
+        name="MainTeamsNavigation"
         options={{
           tabBarLabel: "Teams",
           tabBarIcon: ({ color }) => (
             <FontAwesomeIcon icon={faUsers} color={color} size={20} />
           ),
         }}
-        component={TeamsNavigation}
+        component={MainTeamsNavigation}
       />
       <Tab.Screen
         name="NotificationsNavigation"

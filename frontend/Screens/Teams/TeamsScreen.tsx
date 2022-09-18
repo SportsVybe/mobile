@@ -14,9 +14,7 @@ function TeamsScreen() {
   return (
     <ScrollView>
       <View style={styles.container}>
-        <TouchableOpacity
-        // onPress={() => navigation.navigate("TeamsFilter")}
-        >
+        <TouchableOpacity onPress={() => navigation.navigate("TeamsFilter")}>
           <View style={styles.headerRow}>
             <Text style={styles.title}>Teams</Text>
             <FontAwesomeIcon icon={faFilter} size={20} />
