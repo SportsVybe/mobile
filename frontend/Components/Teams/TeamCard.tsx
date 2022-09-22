@@ -10,9 +10,10 @@ import { Photo } from "../Photo";
 
 type Props = {
   team: Team;
+  key: number;
 };
 
-export const TeamCard = ({ team }: Props) => {
+export const TeamCard = ({ team, key }: Props) => {
   const { user } = useMoralis();
   const [manageTeamModal, toggleManageTeamModal] = useState(false);
   const [manageChallengeModal, toggleManageChallengeModal] = useState(false);
@@ -96,6 +97,7 @@ export const TeamCard = ({ team }: Props) => {
       )} */}
       {user && !isTeamMember && (
         <ManageChallenge
+          key={key}
           challengeTeam={team}
           createNewChallenge={true}
           toggleModal={toggleManageChallengeModal}

@@ -14,7 +14,7 @@ export default function TeamsView({ teams, isLoading }: Props) {
       <View style={styles.container}>
         {teams && !isLoading && teams.length > 0 ? (
           teams.map((team, i) => {
-            return <TeamCard key={team.id} team={team} />;
+            return <TeamCard key={i} team={team} />;
           })
         ) : (
           <Text>No teams found. Try another search</Text>
