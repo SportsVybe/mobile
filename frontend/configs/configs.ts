@@ -1,8 +1,10 @@
 import {
   REACT_APP_CONTRACT_ADDRESS,
+  REACT_APP_INFURA_API_KEY,
   REACT_APP_MORALIS_API_KEY,
   REACT_APP_MORALIS_APPLICATION_ID,
   REACT_APP_MORALIS_SERVER_URL,
+  REACT_APP_RPC_URL,
   REACT_APP_TOKEN_CONTRACT_ADDRESS,
 } from "@env";
 import { GeolocationConfiguration } from "@react-native-community/geolocation";
@@ -20,6 +22,8 @@ export const contractConfig = {
   tokenContractABI: vtoken.abi,
   contractAddress: REACT_APP_CONTRACT_ADDRESS,
   tokenContractAddress: REACT_APP_TOKEN_CONTRACT_ADDRESS,
+  rcpURL: REACT_APP_RPC_URL,
+  infuraApiKey: REACT_APP_INFURA_API_KEY,
 };
 
 export const geoConfig: GeolocationConfiguration = {

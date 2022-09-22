@@ -82,6 +82,9 @@ function AppStateProvider({ children }) {
     if (user) {
       getUserLocation();
     }
+    return () => {
+      Geolocation.clearWatch(Geolocation.watchPosition(() => {}));
+    };
   }, [user]);
 
   return (

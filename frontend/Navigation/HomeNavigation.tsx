@@ -33,6 +33,7 @@ function HomeNavigation(): JSX.Element {
     <Tab.Navigator
       shifting={false}
       activeColor="#315399"
+      initialRouteName="MainTeamsNavigation"
       barStyle={{ backgroundColor: "white" }}>
       <Tab.Screen
         name="MainVenuesNavigation"
