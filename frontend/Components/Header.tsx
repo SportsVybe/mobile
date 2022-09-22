@@ -5,9 +5,11 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 // import { faBell } from "@fortawesome/free-solid-svg-icons";
 // import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import VYBEBalance from "./Assets/VYBEBalance";
+import StatusBarComponent from "./StatusBar";
 export default function Header() {
   return (
     <Suspense fallback={<Text>Loading...</Text>}>
+      <StatusBarComponent />
       <View style={styles.headerContainer}>
         <View style={styles.headerLeft}>
           <Image

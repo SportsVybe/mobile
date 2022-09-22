@@ -49,7 +49,7 @@ export type Team = {
 export type Challenge = {
   id: string;
   challengeChainId: string;
-  challengeAmount: number;
+  challengeAmount: number | string;
   challengeMessage: string;
   challengeSport: string;
   actionId: Action;

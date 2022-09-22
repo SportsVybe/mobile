@@ -13,7 +13,7 @@ type Props = {
 
 export const ProfileController = ({ user, isCurrentUser = false }: Props) => {
   const { userData, fetchUserData } = useUserData({
-    userValue: user.id,
+    userValue: user && user.id,
     userMethod: "objectId",
     includeEthAddress: true,
   });

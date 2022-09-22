@@ -26,11 +26,26 @@ function VYBEBalance({ header = false }): JSX.Element {
   const tokenBalanceValue =
     tokenBalance && tokenBalance.balance / 10 ** tokenBalance.decimals;
 
+  // function to convert amount to K for thousands, M for millions, B for billions, T for trillions
+
+  const tokenBalanceValueKMBT = (value: number) => {
+    if (value >= 1000000000000) {
+      return (value / 1000000000000).toFixed(3) + "T";
+    } else if (value >= 1000000000) {
+      return (value / 1000000000).toFixed(3) + "B";
+    } else if (value >= 1000000) {
+      return (value / 1000000).toFixed(3) + "M";
+    } else if (value >= 1000) {
+      return (value / 1000).toFixed(3) + "K";
+    } else {
+      return value.toFixed(3);
+    }
+  };
   return (
     <Suspense fallback={<Text>Loading...</Text>}>
       <View style={styles.row}>
         <Text style={header && styles.vybeAmount}>
-          {tokenBalanceValue || 0}
+          {tokenBalanceValueKMBT(tokenBalanceValue || 0) || 0}
         </Text>
         <Text style={styles.tokenName}>VYBE</Text>
       </View>
