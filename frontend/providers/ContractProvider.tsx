@@ -1,8 +1,11 @@
+import "@ethersproject/shims";
 import { ethers } from "ethers";
 import React, { createContext, useContext, useState } from "react";
+import { useMoralis, useWeb3ExecuteFunction } from "react-moralis";
 import { contractConfig } from "../configs/configs";
+import { useMoralisDapp } from "./MoralisDappProvider";
 
-const ethereum = typeof window !== "undefined" && (window as any).ethereum;
+import { useWalletConnect } from "../WalletConnect";
 
 const defaultState = {
   isContractLoading: false,
@@ -62,52 +65,54 @@ const ContractContext = createContext(defaultState);
 const ContractProvider = ({ children }: { children: any }) => {
   const [isContractLoading, setIsContractLoading] = useState(false);
   const [contractMessage, setContractMessage] = useState({});
-
-  const getContract = async () => {
-    const provider = new ethers.providers.Web3Provider(ethereum);
-    const signer = provider.getSigner();
-    const contract = new ethers.Contract(
-      contractConfig.contractAddress,
-      contractConfig.contractABI,
-      signer,
-    );
-    return contract;
-  };
-
-  const getTokenContract = async () => {
-    const provider = new ethers.providers.Web3Provider(ethereum);
-    const signer = provider.getSigner();
-    return new ethers.Contract(
-      contractConfig.tokenContractAddress,
-      contractConfig.tokenContractABI,
-      signer,
-    );
-  };
+  const { walletAddress } = useMoralisDapp();
+  const { web3, isWeb3Enabled } = useMoralis();
+  const connector = useWalletConnect();
+  const {
+    data,
+    error,
+    isFetching,
+    fetch,
+    isLoading,
+  } = useWeb3ExecuteFunction();
 
   const approveAmount = async (challengeAmount: string): Promise<any> => {
     setIsContractLoading(true);
     try {
-      const contract = await getTokenContract();
       const challengeAmountWei = ethers.utils.parseEther(challengeAmount);
 
-      const approve = await contract.approve(
-        contractConfig.contractAddress,
-        challengeAmountWei,
-      );
+      const options = {
+        abi: contractConfig.tokenContractABI,
+        contractAddress: contractConfig.tokenContractAddress,
+        functionName: "approve",
+        params: {
+          spender: contractConfig.contractAddress,
+          amount: challengeAmountWei,
+        },
+      };
 
-      if (approve) {
-        setContractMessage({
-          status: "info",
-          message: `Pending ${challengeAmount} SVT approval`,
-        });
-        setIsContractLoading(false);
-      }
+      // approve contract transaction
+      // console.log("approve: ", options.params);
+
+      await fetch({
+        onSuccess(results) {
+          console.log("Approve success");
+          setIsContractLoading(false);
+        },
+        onComplete() {
+          setIsContractLoading(false);
+          console.log("Approve complete");
+        },
+        onError(error) {
+          setIsContractLoading(false);
+          console.error("Approve error: ", error);
+        },
+        params: options,
+      });
       return true;
     } catch (error) {
       setIsContractLoading(false);
-      if (error instanceof Error)
-        setContractMessage({ status: "error", message: error.message });
-      console.error(error);
+      console.error("approve error: ", error);
       return false;
     }
   };
@@ -115,8 +120,8 @@ const ContractProvider = ({ children }: { children: any }) => {
   const createTeam = async (actionId: string): Promise<any> => {
     setIsContractLoading(true);
     try {
-      const contract = await getContract();
-      await contract.functions.createTeam(actionId); // create team transaction
+      // const contract = await getContract();
+      // await contract.functions.createTeam(actionId); // create team transaction
       setContractMessage({
         status: "info",
         message: "Team is being created on chain.",
@@ -145,31 +150,65 @@ const ContractProvider = ({ children }: { children: any }) => {
     try {
       const challengeAmountWei = ethers.utils.parseEther(challengeAmount);
 
-      // create challenge transaction
-      const contract = await getContract();
-      await contract.functions.createChallengePool(
-        actionId,
-        userTeamId,
-        challengeTeamId,
-        challengeAmountWei,
-        {
+      const params = {
+        action_id: actionId,
+        team_id: userTeamId,
+        challenged_team_id: challengeTeamId,
+        amount: challengeAmountWei,
+      };
+
+      try {
+        const data = web3.eth.abi.encodeFunctionCall(
+          {
+            name: "createChallengePool",
+            type: "function",
+            inputs: [
+              {
+                internalType: "string",
+                name: "action_id",
+                type: "string",
+              },
+              {
+                internalType: "uint256",
+                name: "team_id",
+                type: "uint256",
+              },
+              {
+                internalType: "uint256",
+                name: "challenged_team_id",
+                type: "uint256",
+              },
+              {
+                internalType: "uint256",
+                name: "amount",
+                type: "uint256",
+              },
+            ],
+          },
+          [
+            params.action_id,
+            params.team_id,
+            params.challenged_team_id,
+            params.amount,
+          ],
+        );
+
+        const createChallengeOnChain = await connector.sendTransaction({
+          data: data,
+          from: connector.accounts[0],
+          to: contractConfig.contractAddress,
           gasLimit: 3500000,
-        },
-      );
-      setContractMessage({
-        status: "info",
-        message: "Challenge is being created on chain.",
-      });
+        });
+        alert(`Success! Transaction Id: ${createChallengeOnChain.toString()}`);
+      } catch (e) {
+        console.error(e);
+      }
+
       setIsContractLoading(false);
       return true;
     } catch (error: any) {
       setIsContractLoading(false);
-      if (error && error.message) {
-        setContractMessage({ status: "error", message: error.message });
-      } else {
-        setContractMessage({ status: "error", message: "Unknown" });
-      }
-      console.error(error);
+      alert(`create challenge error: ${error.toString()}`);
       return false;
     }
   };

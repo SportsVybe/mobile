@@ -19,6 +19,7 @@ import { Challenge, Team } from "../../configs/types";
 import { capitalizeWord } from "../../helpers/formatters";
 import { useContract } from "../../providers/ContractProvider";
 import { useCustomMoralis } from "../../providers/CustomMoralisProvider";
+import AuthorizeButton from "../Buttons/AuthorizeButton";
 import { Photo } from "../Photo";
 
 type Props = {
@@ -37,7 +38,7 @@ function ManageChallenge({
   challenge = null,
 }: Props): JSX.Element {
   const getChallengesDB = useNewMoralisObject("challenges");
-  const [challengeAmount, setChallengeAmount] = useState<number>(0);
+  const [challengeAmount, setChallengeAmount] = useState<string>("");
   const [challengeMessage, setChallengeMessage] = useState("");
   const [teamModalVisible, toggleChooseTeamModalVisible] = useState(false);
   const [challengeTeam1, setChallengeTeam1] = useState<Team | null>(null);
@@ -55,7 +56,7 @@ function ManageChallenge({
     id: (challenge && challenge.id) || "",
     challengeChainId: (challenge && challenge.get("challengeChainId")) || "",
     actionId: (challenge && challenge.get("actionId")) || "",
-    challengeAmount: challengeAmount,
+    challengeAmount: String(challengeAmount),
     challengeMessage: challengeMessage,
     challengeSport: challengeSports,
     challengeTeam1: challengeTeam1,
@@ -69,7 +70,8 @@ function ManageChallenge({
     challengeTeam1TeamMembers:
       (challengeTeam1 && challengeTeam1.get("teamMembers")) || [],
     challengeTeam2: challengeTeam,
-    challengeTeam2_chainId: (challengeTeam && challengeTeam.id) || "",
+    challengeTeam2_chainId:
+      (challengeTeam && challengeTeam.get("teamChainId")) || "",
     challengeTeam2Admin:
       (challengeTeam && challengeTeam.get("teamAdmin")) || "",
     challengeTeam2Count:
@@ -133,6 +135,7 @@ function ManageChallenge({
       return;
     }
     const selectedTeam = userTeams?.teamOwnerActiveTeams.find(
+      // eslint-disable-next-line
       team => team?.get("teamChainId") === teamChainId,
     );
     setChallengeTeam1(selectedTeam || null);
@@ -211,7 +214,7 @@ function ManageChallenge({
                   <TextInput
                     style={styles.input}
                     keyboardType="numeric"
-                    onChangeText={text => setChallengeAmount(Number(text))}
+                    onChangeText={text => setChallengeAmount(text)}
                     value={String(challengeAmount)}
                     clearButtonMode="while-editing"
                   />
@@ -268,9 +271,11 @@ function ManageChallenge({
                 </View>
               </View>
               <View style={styles.modalCol}>
-                <Text>You have approved 1.0 VYBE</Text>
+                <AuthorizeButton amount={Number(challengeAmount)} />
                 <View style={styles.buttonRow}>
-                  <TouchableOpacity style={styles.button}>
+                  <TouchableOpacity
+                    style={styles.button}
+                    onPress={handleSubmit}>
                     <Text style={styles.buttonText}>Send</Text>
                   </TouchableOpacity>
                   <TouchableOpacity
